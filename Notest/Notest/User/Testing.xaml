@@ -1,0 +1,62 @@
+﻿<Window x:Class="Notest.Testing"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Notest"
+        mc:Ignorable="d"
+        Title="Notest" Height="500" Width="800" Icon ="../ico/main.ico">
+    <Window.Background>
+        <ImageBrush ImageSource="..\picture\6.jpg" />
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="12*"/>
+            <RowDefinition Height="12*"/>
+            <RowDefinition Height="76*"/>
+        </Grid.RowDefinitions>
+        <Grid  Grid.Row="0"  Background="#373940" >
+            <Image Source="../ico/book.ico"  
+                           Width="65" Height="55"
+                           HorizontalAlignment="Left"
+                           Margin="15 0 0 0"/>
+            <TextBlock x:Name="UserLogin"
+                        HorizontalAlignment="Left"
+                           Margin="15"
+                           Foreground="#e3e0de"
+                           Width="140"
+                           FontSize="20">
+            </TextBlock>
+            <Button Width="80" Height="60"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        HorizontalAlignment="Right"
+                        ToolTip="Выход"                        
+                        Margin="0 0 15 0"
+                        Click="GoOut">
+                <Image Source="../ico/door.ico"
+                           Width="75" Height="55"
+                           VerticalAlignment="Center"/>
+            </Button>
+        </Grid>
+        <Label FontSize="24"
+               Grid.Row="1"
+               Name="Topic"
+               Content="Тема:"
+               HorizontalAlignment="Center"/>
+        <Label FontSize="24"
+               Grid.Row="2
+               " Name="Header"
+               Content="Название:"
+               HorizontalAlignment="Center"/>
+        <Viewbox Grid.Row="3">
+            <ScrollViewer CanContentScroll="True"
+                          Width="400"
+                          VerticalScrollBarVisibility="Auto">
+                <StackPanel Name="SelectedTest" Orientation="Vertical" Height="342">
+                </StackPanel>
+            </ScrollViewer>
+        </Viewbox>
+    </Grid>
+</Window>
