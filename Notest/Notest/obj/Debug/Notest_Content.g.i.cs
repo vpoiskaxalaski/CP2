@@ -8,7 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("localdatabase.mdf")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("localdatabase_log.ldf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("ico/minimize.png")]
 
 

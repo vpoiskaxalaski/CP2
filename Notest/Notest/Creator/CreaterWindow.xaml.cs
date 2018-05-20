@@ -13,9 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Validation;
 using System.IO;
-using System.Drawing;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Notest
 {
@@ -26,7 +25,6 @@ namespace Notest
     {
         QuestionChange questionChangePanel = new QuestionChange();
         Context db = new Context();
-        List<Question> questionList = new List<Question>();
         List<Answer> answerList = new List<Answer>();
 
         int countQuestion = 0;
@@ -60,36 +58,16 @@ namespace Notest
 
             questionChangePanel.IsEnabled = false;
             TestToolsWindow.Children.Add(questionChangePanel);
+            questionChangePanel.questionCosttxb.BorderBrush = new SolidColorBrush(Colors.Gray);
             questionChangePanel.SaveChanges.Click += SaveChanges_Click;
             questionChangePanel.Clear.Click += Clear_Click;
             questionChangePanel.RemoveAnswer.Click += RemoveAnswer_Click;
             questionChangePanel.AnswerDtgrd.ItemsSource = answerList;
 
-            if (Class.CurrentUser.user != null)
-            {
-                UserLogin.Text = Class.CurrentUser.user.Login;
-            }
+            UserLogin.Text = Class.CurrentUser.user != null ? Class.CurrentUser.user.Login : "Unknown";
         }
 
-        //удаление ответа
-        private void RemoveAnswer_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Answer selectedAnswer = (Answer) questionChangePanel.AnswerDtgrd.SelectedItem;
-                if(selectedAnswer!=null)
-                {
-                    answerList = (List<Answer>)questionChangePanel.AnswerDtgrd.ItemsSource;
-                    answerList.Remove(selectedAnswer);
-                    questionChangePanel.AnswerDtgrd.Items.Refresh();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
+        #region вспомогательные функции
         //обновить список вопросов
         private void UpdateQuestionList()
         {
@@ -97,11 +75,11 @@ namespace Notest
             {
                 question_ListBox.Items.Clear();
 
-                if(questionList!=null)
+                if(CurrentTest.test.Questions != null)
                 {
-                    foreach (Question q in questionList)
+                    foreach (Question q in CurrentTest.test.Questions)
                     {
-                        question_ListBox.Items.Add(question_ListBox.Items.Count.ToString() + ". " + q.Question1);
+                        question_ListBox.Items.Add((question_ListBox.Items.Count + 1).ToString() + ". " + q.Question1);
                     }
                 }                
             }
@@ -110,6 +88,20 @@ namespace Notest
                 MessageBox.Show("Update error");
             }
         }
+
+        //очистка рабочей области
+        private void CleanWindow()
+        {
+            answerList.Clear();
+            questionChangePanel.questionText.Document.Blocks.Clear();
+            questionChangePanel.PictureBox.Source = null;
+            questionChangePanel.questionCosttxb.Text = "1";
+            questionChangePanel.questionCosttxb.BorderBrush = new SolidColorBrush(Colors.Gray);
+            questionChangePanel.AnswerDtgrd.ItemsSource = answerList;
+            questionChangePanel.AnswerDtgrd.Items.Refresh();
+        }
+
+        #endregion
 
         //создание нового теста
         private void NewTest_Click(object sender, RoutedEventArgs e)
@@ -123,7 +115,6 @@ namespace Notest
                 {
                     //очистка рабочей области
                     question_ListBox.Items.Clear();
-                    questionList.Clear();
                     countQuestion = 0;
                     CleanWindow();
                    
@@ -132,6 +123,7 @@ namespace Notest
                     
                     // добавление вовзможность создать/удалить вопрос
                     QuestionTools.Visibility = Visibility;
+                    AddQuestionFromDb.Visibility = Visibility;
                     questionChangePanel.IsEnabled = true;
 
                     CurrentTest.test.Author = UserLogin.Text;
@@ -139,7 +131,7 @@ namespace Notest
             }
             catch 
             {
-                MessageBox.Show("Create error");
+                MessageBox.Show("It is not possible to create", "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         
@@ -154,7 +146,7 @@ namespace Notest
                     db.SaveChanges();
                     CurrentTest.test.Id = db.Tests.FirstOrDefault(t => (t.Header == CurrentTest.test.Header) && (t.Topic == CurrentTest.test.Topic)).Id;
 
-                    foreach (Question q in questionList)
+                    foreach (Question q in CurrentTest.test.Questions)
                     {
                         q.Test_Id = CurrentTest.test.Id;
                         db.Questions.Add(q);
@@ -169,7 +161,7 @@ namespace Notest
                         }
                     }
                 }
-                else
+                else //если работаем с существующим тестом
                 {
                     List<Question>  questions = Question.ChangeFromDb( db.Questions.Where(q=> q.Test_Id == CurrentTest.test.Id));
 
@@ -181,7 +173,7 @@ namespace Notest
 
                     db.Questions.RemoveRange(db.Questions.Where(q => q.Test_Id == CurrentTest.test.Id));                    
 
-                    foreach (Question q in questionList)
+                    foreach (Question q in CurrentTest.test.Questions)
                     {
                         q.Test_Id = CurrentTest.test.Id;
                         db.Questions.Add(q);
@@ -197,11 +189,11 @@ namespace Notest
 
                     }
                 }
-                MessageBox.Show("Test saved");
+                MessageBox.Show("Test saved", "", MessageBoxButton.OK, MessageBoxImage.Asterisk);
             }
             catch
             {
-                MessageBox.Show("Saved test error");
+                MessageBox.Show("It is not possible to save", "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -219,13 +211,14 @@ namespace Notest
 
                     // добавление вовзможность создать/удалить вопрос
                     QuestionTools.Visibility = Visibility;
+                    AddQuestionFromDb.Visibility = Visibility;
                     questionChangePanel.IsEnabled = true;
 
                     //добавление названия теста
                     NameTest.Text = CurrentTest.test.Header;
 
-                    questionList = Question.ChangeFromDb(db.Questions.Where(q=> q.Test_Id == CurrentTest.test.Id));
-                    foreach(Question q in questionList)
+                    CurrentTest.test.Questions = Question.ChangeFromDb(db.Questions.Where(q=> q.Test_Id == CurrentTest.test.Id));
+                    foreach(Question q in CurrentTest.test.Questions)
                     {
                         q.Answers = Answer.ChangeFromDb( db.Answers.Where(a => a.Question_Id == q.Id));
                     }
@@ -236,7 +229,7 @@ namespace Notest
             }
             catch
             {
-                MessageBox.Show("Open error");
+                MessageBox.Show("Open error", "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -272,55 +265,33 @@ namespace Notest
                 //варианты ответов
                 answerList.AddRange((List<Answer>)questionChangePanel.AnswerDtgrd.ItemsSource);
                 answerList.RemoveRange(answerList.Count / 2, answerList.Count / 2);
-                question.Answers.AddRange(answerList);              
+                question.Answers.AddRange(answerList);
 
-                questionList.Add(question);
+                CurrentTest.test.Questions.Add(question);
                 countQuestion += 1;
 
                 CleanWindow();
             }
             catch 
             {
-                MessageBox.Show("Add question error");
+                MessageBox.Show("Add question error", "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
 
-        //выбор вопроса в списке      
-        private void question_ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //добавить вопрос из бд
+        private void AddQuestionFromDb_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if(question_ListBox.SelectedItem != null)
-                {
-                    questionChangePanel.PictureBox.Source = null;
-                    string selectedQuestion = question_ListBox.SelectedItem.ToString().Remove(0, question_ListBox.SelectedItem.ToString().IndexOf('.')+2);
-                    TextRange range = new TextRange(questionChangePanel.questionText.Document.ContentStart, questionChangePanel.questionText.Document.ContentEnd);                    
-                    range.Text = selectedQuestion;
-
-                    foreach(Question q in questionList)
-                    {
-                        if(q.Question1 == selectedQuestion)
-                        {
-                            questionChangePanel.questionCosttxb.Text = q.Cost.ToString();
-
-                            if (q.Image != null)
-                            {
-                                questionChangePanel.PictureBox.Source = new BitmapImage(new Uri(q.Image));
-                            }                          
-                            questionChangePanel.AnswerDtgrd.ItemsSource = q.Answers;
-                            questionChangePanel.AnswerDtgrd.Items.Refresh();
-                            break;
-                        }
-                    }                    
-                }
-                
+                AddQuestions addQuestions = new AddQuestions();
+                addQuestions.ShowDialog();
+                UpdateQuestionList();
             }
-            catch
+            catch 
             {
-                MessageBox.Show("Selected item error");
+                MessageBox.Show("Add question error", "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            
         }
 
         // удалить вопрос
@@ -328,30 +299,70 @@ namespace Notest
         {
             try
             {
-                string selectedQuestion = question_ListBox.SelectedItem.ToString().Remove(0, question_ListBox.SelectedItem.ToString().IndexOf('.')+2);
-                int index = question_ListBox.SelectedIndex;
-                question_ListBox.SelectedItem = question_ListBox.Items[0];
-                question_ListBox.Items.RemoveAt(index);              
-
-                Question question = new Question();
-                foreach (Question q in questionList)
+                MessageBoxResult result = MessageBox.Show("Are you shure?", "", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if(result ==MessageBoxResult.OK)
                 {
-                    if(q.Question1 == selectedQuestion)
-                    {
-                        question = q;
-                        break;
-                    }
-                }
+                    string selectedQuestion = question_ListBox.SelectedItem.ToString().Remove(0, question_ListBox.SelectedItem.ToString().IndexOf('.') + 2);
+                    int index = question_ListBox.SelectedIndex;
+                    question_ListBox.SelectedItem = question_ListBox.Items[0];
+                    question_ListBox.Items.RemoveAt(index);
 
-                questionList.Remove(question);
-                countQuestion -= 1;                
-                UpdateQuestionList();
+                    Question question = new Question();
+                    foreach (Question q in CurrentTest.test.Questions)
+                    {
+                        if (q.Question1 == selectedQuestion)
+                        {
+                            question = q;
+                            break;
+                        }
+                    }
+
+                    CurrentTest.test.Questions.Remove(question);
+                    countQuestion -= 1;
+                    UpdateQuestionList();
+                }                
             }
             catch
             {
-                MessageBox.Show("Delete question error");
+                MessageBox.Show("Delete question error", "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        //выбор вопроса в списке      
+        private void question_ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (question_ListBox.SelectedItem != null)
+                {
+                    questionChangePanel.PictureBox.Source = null;
+                    string selectedQuestion = question_ListBox.SelectedItem.ToString().Remove(0, question_ListBox.SelectedItem.ToString().IndexOf('.') + 2);
+                    TextRange range = new TextRange(questionChangePanel.questionText.Document.ContentStart, questionChangePanel.questionText.Document.ContentEnd);
+                    range.Text = selectedQuestion;
+
+                    foreach (Question q in CurrentTest.test.Questions)
+                    {
+                        if (q.Question1 == selectedQuestion)
+                        {
+                            questionChangePanel.questionCosttxb.Text = q.Cost.ToString();
+
+                            if (q.Image != null)
+                            {
+                                questionChangePanel.PictureBox.Source = new BitmapImage(new Uri(q.Image));
+                            }
+                            questionChangePanel.AnswerDtgrd.ItemsSource = q.Answers;
+                            questionChangePanel.AnswerDtgrd.Items.Refresh();
+                            break;
+                        }
+                    }
+                }
+
+            }
+            catch
+            {
+
+            }            
+        }        
 
         //сохранить изменения
         private void SaveChanges_Click(object sender, RoutedEventArgs e)
@@ -359,11 +370,11 @@ namespace Notest
             try
             {
                 if (question_ListBox.SelectedItem != null)
-                {
+                {                    
                     string selectedQuestion = question_ListBox.SelectedItem.ToString();
                     TextRange range = new TextRange(questionChangePanel.questionText.Document.ContentStart, questionChangePanel.questionText.Document.ContentEnd);
                     
-                    foreach (Question q in questionList)
+                    foreach (Question q in CurrentTest.test.Questions)
                     {
                         if (q.Question1 == selectedQuestion.Remove(0, selectedQuestion.IndexOf('.') + 2))
                         {
@@ -386,17 +397,17 @@ namespace Notest
                             answerList = (List<Answer>)questionChangePanel.AnswerDtgrd.ItemsSource;
                             if(answerList!=null)
                             {
-                                //answerList.RemoveRange(answerList.Count / 2, answerList.Count / 2);
                                 q.Answers = answerList;
                             }                           
                             break;
                         }
                     }
+                    MessageBox.Show("Changes saved", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show("Save changes error" + ex.Message);
+                MessageBox.Show("Save changes error", "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -406,18 +417,30 @@ namespace Notest
             CleanWindow();
         }
 
-        //очистка рабочей области
-        private void CleanWindow()
+        //удаление ответа
+        private void RemoveAnswer_Click(object sender, RoutedEventArgs e)
         {
-            answerList.Clear();
-            questionChangePanel.questionText.Document.Blocks.Clear();
-            questionChangePanel.PictureBox.Source = null;
-            questionChangePanel.questionCosttxb.Text = "1";
-            questionChangePanel.AnswerDtgrd.ItemsSource = answerList;
-            questionChangePanel.AnswerDtgrd.Items.Refresh();
+            try
+            {
+                var selectedAnswer = questionChangePanel.AnswerDtgrd.SelectedItem;
+                answerList = (List<Answer>)questionChangePanel.AnswerDtgrd.ItemsSource;
+                if ((selectedAnswer as Answer) != null)
+                {
+                    answerList.Remove((Answer)selectedAnswer);
+                    questionChangePanel.AnswerDtgrd.Items.Refresh();
+                }
+                else
+                {
+                    questionChangePanel.AnswerDtgrd.CanUserAddRows = false;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Сan not be removed","", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
-        //выход в окно регистрации/входа
+        #region  выход в окно регистрации/входа
         private void GoOut(object sender, RoutedEventArgs e)
         {
             try
@@ -430,6 +453,50 @@ namespace Notest
             {
                 MessageBox.Show("Невозможно выйти");
             }
+        }
+        private void OnMouseOver(object sender, MouseEventArgs e)
+        {
+            var image = sender as System.Windows.Controls.Image;
+            image.Source = BitmapFrame.Create(new Uri(@"pack://application:,,,/ico/opened_door.ico"));
+        }
+
+        private void OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            var image = sender as System.Windows.Controls.Image;
+            image.Source = BitmapFrame.Create(new Uri(@"pack://application:,,,/ico/door.ico"));
+        }
+        #endregion
+
+        #region кнопки для окна
+        private void CloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void HideWindow_Click(object sender, RoutedEventArgs e)
+        {
+            SystemCommands.MinimizeWindow(this);
+        }
+
+        private void Fullscreen_Click(object sender, RoutedEventArgs e)
+        {
+            SystemCommands.MaximizeWindow(this);
+            Fullscreen.Visibility = Visibility.Hidden;
+            FullscreenExit.Visibility = Visibility.Visible;
+        }
+
+        private void FullscreenExit_Click(object sender, RoutedEventArgs e)
+        {
+            SystemCommands.RestoreWindow(this);
+            FullscreenExit.Visibility = Visibility.Hidden;
+            Fullscreen.Visibility = Visibility.Visible;
+        }
+        #endregion
+
+        private void UsersResult_Click(object sender, RoutedEventArgs e)
+        {
+            TestResults testResults = new TestResults();
+            testResults.ShowDialog();
         }
     }
 }

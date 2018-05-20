@@ -6,7 +6,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"        
         xmlns:local="clr-namespace:Notest"
         mc:Ignorable="d"
-        Title="Notest" Height="500" Width="800" Icon ="../ico/main.ico">
+        Title="Notest"
+        Height="525" Width="800"
+        WindowStyle="None" AllowsTransparency="True"
+        Icon ="../ico/main.ico">
     <Window.Background>
         <ImageBrush ImageSource="..\picture\1.jpg" />
     </Window.Background>
@@ -16,19 +19,67 @@
         </Style>
         <Style x:Key="OpenDoor">
             <Style.Triggers>
-                <EventTrigger>
-
-                </EventTrigger>
+                <EventTrigger/>
             </Style.Triggers>
         </Style>
     </Window.Resources>
     <Viewbox Stretch="Fill">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="490"/>
             </Grid.RowDefinitions>
-            <Grid  Grid.Row="0" Background="#373940" >
+            <Grid Grid.Row="0" Background="#373940">
+                <Button Width="45" Height="Auto"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 80 0"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Click="HideWindow_Click">
+
+                    <Image Source="..\ico\minimize.png"
+                                             Width="25" Height="25"
+                                             HorizontalAlignment="Center"
+                                             Margin="0 -7 0 0"
+                                             />
+                </Button>
+                <Button Name="Fullscreen"
+                        Width="45" Height="Auto"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 40 0"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"                        
+                        Click="Fullscreen_Click">
+                    <materialDesign:PackIcon Kind="Fullscreen"
+                                             Width="25" Height="20"
+                                             HorizontalAlignment="Center"/>
+                </Button>
+                <Button Name="FullscreenExit"
+                        Width="45" Height="Auto"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 40 0"
+                        Visibility="Hidden"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"                        
+                        Click="FullscreenExit_Click">
+                    <materialDesign:PackIcon Kind="FullscreenExit"
+                                             Width="25" Height="20"
+                                             HorizontalAlignment="Center"/>
+                </Button>
+                <Button Width="43" Height="Auto"
+                        HorizontalAlignment="Right"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}" 
+                        Click="CloseWindow_Click">
+                    <materialDesign:PackIcon Kind="WindowClose"
+                                             Width="27" Height="21"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             />
+                </Button>
+            </Grid>
+            <Grid  Grid.Row="1" Background="#373940" >
                 <Image Source="../ico/book.ico"  
                            Width="65" Height="55"
                            HorizontalAlignment="Left"/>
@@ -54,7 +105,7 @@
                 </Button>
             </Grid>
 
-            <StackPanel Grid.Row="1" Height="350" Orientation="Vertical" Margin="287,10,233,120" >
+            <StackPanel Grid.Row="2" Height="350" Orientation="Vertical" Margin="287,10,233,120" >
                 <Viewbox>
                     <TabControl Width="326" Height="274" Background="{x:Null}">
                         <TabItem Header="Поиск по теме"

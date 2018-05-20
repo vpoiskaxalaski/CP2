@@ -291,5 +291,31 @@ namespace Notest
             image.Source = BitmapFrame.Create(new Uri(@"pack://application:,,,/ico/door.ico"));
         }
         #endregion
+
+        #region кнопки для окна
+        private void CloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void HideWindow_Click(object sender, RoutedEventArgs e)
+        {
+            SystemCommands.MinimizeWindow(this);
+        }
+
+        private void Fullscreen_Click(object sender, RoutedEventArgs e)
+        {
+            SystemCommands.MaximizeWindow(this);
+            Fullscreen.Visibility = Visibility.Hidden;
+            FullscreenExit.Visibility = Visibility.Visible;
+        }
+
+        private void FullscreenExit_Click(object sender, RoutedEventArgs e)
+        {
+            SystemCommands.RestoreWindow(this);
+            FullscreenExit.Visibility = Visibility.Hidden;
+            Fullscreen.Visibility = Visibility.Visible;
+        }
+        #endregion
     }
 }

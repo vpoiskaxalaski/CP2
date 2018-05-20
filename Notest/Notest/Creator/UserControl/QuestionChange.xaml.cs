@@ -33,7 +33,9 @@ namespace Notest
                 }
             }
         }
-       
+
+
+        #region картинка
         //добавление картинки
         private void AddImage_Click(object sender, RoutedEventArgs e)
         {
@@ -70,6 +72,13 @@ namespace Notest
             {
                 MessageBox.Show("Ошибка: " + ex.Message);
             }
+        }
+        #endregion
+
+        //добавление ответа
+        private void AddAnswer_Click(object sender, RoutedEventArgs e)
+        {
+            AnswerDtgrd.CanUserAddRows = true;
         }
     }
 }

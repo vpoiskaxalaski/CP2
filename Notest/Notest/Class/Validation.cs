@@ -14,9 +14,7 @@ using System.Data.Entity.Validation;
 namespace Notest
 {
     public static class Validation
-    {
-      
-
+    {    
         //ПРОВЕРКА на повторение логина
         public static bool NoRepeatLogin(string s)
         {
@@ -102,78 +100,79 @@ namespace Notest
 
         public partial class MainWindow : Window
         {
-        //корректность логина
-        private bool CheckLogin(TextBox login, Image image)
-        {
-            string regex = @"[0-9a-zA-Z]";
-            bool valid = true;
-            ToolTip toolTip = new ToolTip();
 
-            for (int i = 0; i < login.Text.Length; i++)
+            //корректность логина
+            private bool CheckLogin(TextBox login, Image image)
             {
-                if (Regex.IsMatch(login.Text[i].ToString(), regex) == false)
+                string regex = @"[0-9a-zA-Z]";
+                bool valid = true;
+                ToolTip toolTip = new ToolTip();
+
+                for (int i = 0; i < login.Text.Length; i++)
+                {
+                    if (Regex.IsMatch(login.Text[i].ToString(), regex) == false)
+                    {
+                        valid = false;
+                        toolTip.Content = "Wrong symbol";
+                    }
+                }
+
+                if (login.Text.Length == 0)
                 {
                     valid = false;
-                    toolTip.Content = "Wrong symbol";
+                    toolTip.Content = "Can not be empty";
                 }
+
+                if (login.Name == "NewLogin")
+                {
+                    if (Validation.NoRepeatLogin(login.Text) == false)
+                    {
+                        valid = false;
+                        toolTip.Content = "Данный логин уже существует";
+                    }
+                }
+
+                if (valid == false)
+                {
+                    login.BorderBrush = new SolidColorBrush(Colors.IndianRed);
+                    image.Visibility = Visibility.Visible;
+                    image.ToolTip = toolTip;
+                }
+
+                return valid;
             }
 
-            if (login.Text.Length == 0)
+            //корректность пароля
+            private bool CheckPassword(PasswordBox passwordBox, Image image)
             {
-                valid = false;
-                toolTip.Content = "Can not be empty";
-            }
+                string regex = @"[0-9a-zA-Z]";
+                bool valid = true;
+                ToolTip toolTip = new ToolTip();
 
-            if (login.Name == "NewLogin")
-            {
-                if (Validation.NoRepeatLogin(login.Text) == false)
+                for (int i = 0; i < passwordBox.Password.Length; i++)
+                {
+                    if (Regex.IsMatch(passwordBox.Password[i].ToString(), regex) == false)
+                    {
+                        valid = false;
+                        toolTip.Content = "Wrong symbol";
+                    }
+                }
+
+                if (passwordBox.Password.Length == 0)
                 {
                     valid = false;
-                    toolTip.Content = "Данный логин уже существует";
+                    toolTip.Content = "Can not be empty";
                 }
-            }
-           
-            if (valid == false)
-            {
-                login.BorderBrush = new SolidColorBrush(Colors.IndianRed);
-                image.Visibility = Visibility.Visible;
-                image.ToolTip = toolTip;
-            }
 
-            return valid;
-        }
-
-        //корректность пароля
-        private bool CheckPassword(PasswordBox passwordBox, Image image)
-        {
-            string regex = @"[0-9a-zA-Z]";
-            bool valid = true;
-            ToolTip toolTip = new ToolTip();
-
-            for (int i = 0; i < passwordBox.Password.Length; i++)
-            {
-                if (Regex.IsMatch(passwordBox.Password[i].ToString(), regex) == false)
+                if (valid == false)
                 {
-                    valid = false;
-                    toolTip.Content = "Wrong symbol";
+                    passwordBox.BorderBrush = new SolidColorBrush(Colors.IndianRed);
+                    image.Visibility = Visibility.Visible;
+                    image.ToolTip = toolTip;
                 }
+                return valid;
             }
-
-            if (passwordBox.Password.Length == 0)
-            {
-                valid = false;
-                toolTip.Content = "Can not be empty";
-            }
-
-            if (valid == false)
-            {
-                passwordBox.BorderBrush = new SolidColorBrush(Colors.IndianRed);
-                image.Visibility = Visibility.Visible;
-                image.ToolTip = toolTip;
-            }
-            return valid;
-        }
 
        
-    }
+        }
 }

@@ -6,22 +6,82 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Notest"
         mc:Ignorable="d"
-        Title="Notest" Height="500" Width="800" Icon ="../ico/main.ico">
+        Title="Notest" 
+        Height="525" Width="800"
+        Icon ="../ico/main.ico"
+        WindowStyle="None" AllowsTransparency="True">
     <Window.Background>
         <ImageBrush ImageSource="..\picture\2.jpg" />
     </Window.Background>
+    <Window.Resources>
+        <Style x:Key="OpenDoor">
+            <Style.Triggers>
+                <EventTrigger/>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Viewbox Stretch="Fill">
-        <Grid>
+        <Grid>           
             <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="490"/>
             </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="#373940">
+                <Button Width="45" Height="Auto"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 80 0"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Click="HideWindow_Click">
+
+                    <Image Source="..\ico\minimize.png"
+                                             Width="25" Height="25"
+                                             HorizontalAlignment="Center"
+                                             Margin="0 -7 0 0"
+                                             />
+                </Button>
+                <Button Name="Fullscreen"
+                        Width="45" Height="Auto"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 40 0"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"                        
+                        Click="Fullscreen_Click">
+                    <materialDesign:PackIcon Kind="Fullscreen"
+                                             Width="25" Height="20"
+                                             HorizontalAlignment="Center"/>
+                </Button>
+                <Button Name="FullscreenExit"
+                        Width="45" Height="Auto"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 40 0"
+                        Visibility="Hidden"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"                        
+                        Click="FullscreenExit_Click">
+                    <materialDesign:PackIcon Kind="FullscreenExit"
+                                             Width="25" Height="20"
+                                             HorizontalAlignment="Center"/>
+                </Button>
+                <Button Width="43" Height="Auto"
+                        HorizontalAlignment="Right"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}" 
+                        Click="CloseWindow_Click">
+                    <materialDesign:PackIcon Kind="WindowClose"
+                                             Width="27" Height="21"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             />
+                </Button>
+            </Grid>
             <Rectangle Fill="#0e0e13"
-                       Grid.Row="1" 
-                       Margin="0 0 760 0"
+                       Grid.Row="2" 
+                       HorizontalAlignment="Left"
                        Width="260"
                        Opacity="0.6"/>
-            <StackPanel  Grid.Row="0" Orientation="Horizontal" Background="#373940" >
+            <StackPanel  Grid.Row="1" Orientation="Horizontal" Background="#373940" >
                 <Image Source="../ico/developer.ico"  
                            Width="65" Height="55"
                            Margin="15 0 0 0"/>
@@ -29,14 +89,19 @@
                            Margin="15,20,0,10"
                            Foreground="#e3e0de"
                            Width="140"
-                           FontSize="20"><InlineUIContainer>
-                        <TextBlock x:Name="UserLogin_Copy"
-                            Margin="15,0,0,0"
-                            Foreground="#e3e0de"
-                            Width="140"
-                            FontSize="20" Height="30"/>
-                    </InlineUIContainer></TextBlock>
-                <Grid Margin="50,5,55,5">
+                           FontSize="20"/>
+                <Button Name="UsersResult"
+                        ToolTip="Show passed tests"
+                            Width="90" Height="55"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            Margin="5 0 15 0"
+                            Click="UsersResult_Click">
+                    <Image Source="../ico/results.ico"
+                                    Width="70" Height="40"
+                                    Margin="0 -3 0 0"/>
+                </Button>
+                <Grid Margin="0,5,45,5">                    
                     <Rectangle Fill="#0e0e13"
                                Width="260"
                                RadiusX="10"
@@ -94,7 +159,7 @@
                     </Button>
                     
                 </Grid>
-                <Grid Name="QuestionTools"  Margin="5,5,65,5" Visibility="Visible">
+                <Grid Name="QuestionTools"  Margin="5,5,55,5" Visibility="Visible">
                     <Rectangle   Fill="#0e0e13"
                                  Width="250"
                                  RadiusX="10" RadiusY="15"
@@ -146,12 +211,14 @@
                         Click="GoOut">
                     <Image Source="../ico/door.ico"
                            Width="75" Height="55"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center"
+                            MouseEnter="OnMouseOver"
+                           MouseLeave="OnMouseLeave"/>
                 </Button>
             </StackPanel>            
             <StackPanel Name="TestToolsWindow"
                         Orientation="Horizontal"
-                        Grid.Row="1">
+                        Grid.Row="2">
                 <StackPanel Name="QuestionList" Width="250">
                     <TextBlock Name="NameTest"
                                FontSize="25"
@@ -162,6 +229,20 @@
                              Margin="0 20 0 0"
                              Foreground="#e3e0de"
                              SelectionChanged="question_ListBox_SelectionChanged" />
+                    <Button Name="AddQuestionFromDb"
+                        Width="60" Height="50"
+                            Visibility="Hidden"
+                            HorizontalAlignment="Right"
+                            Margin="20"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"                         
+                        ToolTip="Add a question from the list"
+                            Click="AddQuestionFromDb_Click">
+                        <materialDesign:PackIcon Kind="Plus"
+                                                 HorizontalAlignment="Center"
+                                                 Width="40" Height="40"
+                                                 Foreground="#f0e9dd"/>
+                    </Button>
                 </StackPanel>
             </StackPanel>
         </Grid>

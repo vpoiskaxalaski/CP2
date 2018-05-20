@@ -3,43 +3,55 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Notest"
         mc:Ignorable="d"
-        Height="300" Width="200"   Icon="..\ico\main.ico">
+        Height="400" Width="300"   Icon="..\ico\main.ico"
+        WindowStyle="None" AllowsTransparency="True">
     <Window.Background>
-        <ImageBrush ImageSource="..\picture\5.jpg"/>
+        <ImageBrush ImageSource="..\picture\6.jpg"/>
     </Window.Background>
-    <StackPanel Width="150">
-        <TextBlock Text="Test topic"  
-                   FontSize="14"
-                   FontWeight="Bold"
-                   Foreground="#e3e0de"
-                   HorizontalAlignment="Center"
-                   Margin="0,15,0,0"/>
-        <TextBox Name="TestTheme"
-                  Foreground="#e3e0de"
-                 FontSize="14"
-                 Width="120"                 
-                 Margin="0,10,0,0"                 
-                 TextAlignment="Center"/>
-        <TextBlock Text="Test title"   
-                   FontSize="14"
-                   FontWeight="Bold"
-                   Foreground="#e3e0de"
-                   HorizontalAlignment="Center"
-                   Margin="0,20,0,0"/>
-        <TextBox Name="TestName"
-                 Width="120"
-                 Margin="0,10,0,0"   
-                  Foreground="#e3e0de"
-                 FontSize="14"
-                 TextAlignment="Center"/>
+    <Grid>
+        <Grid Height="25" VerticalAlignment="Top" Background="#373940">
+            <Button Width="43" Height="Auto"
+                        HorizontalAlignment="Right"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}" 
+                        Click="CloseWindow_Click">
+                <materialDesign:PackIcon Kind="WindowClose"
+                                             Width="27" Height="21"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             />
+            </Button>
+        </Grid>
+        <Rectangle
+            Fill="#c3beba"
+            Width="250" Height="280"
+            VerticalAlignment="Center"              
+            Margin="15"
+            Opacity="0.7"/>
+        <ListView Name="AllTests"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"                  
+                  Height="280" Margin="64,60">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Topic}"
+                                    Header="Topic" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Header}"
+                                    Header="Header" />
+                </GridView>
+            </ListView.View>
+        </ListView>
         <Button Name="FindTestButton"
                 Width="70" Height="25"
-                Margin="70,50,0,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+                Margin="25"
                 Foreground="#e3e0de"
-                Content="Search" 
+                Content="Select" 
                 FontSize="10"                
                 Click="FindTestButton_Click"/>
-    </StackPanel>
+    </Grid>
 </Window>

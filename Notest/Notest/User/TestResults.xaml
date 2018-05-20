@@ -3,26 +3,80 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Notest"
         mc:Ignorable="d"
-               Title="Notest" Height="500" Width="800" Icon ="../ico/main.ico">
-    <Window.Background>
-        <ImageBrush ImageSource="E:\Pictures\курсовой\3.jpg" />
-    </Window.Background>
+        WindowStyle="None" AllowsTransparency="True"
+        Title="Notest" Height="325" Width="600" Icon ="../ico/main.ico">
     <Window.Resources>
         <Style x:Key="ds" TargetType="Label">
             <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="OpenDoor">
+            <Style.Triggers>
+                <EventTrigger/>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
     <Viewbox Stretch="Fill">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="490"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="250"/>
             </Grid.RowDefinitions>
-            <StackPanel  Grid.Row="0" Orientation="Horizontal" Background="#373940" >
+            <Grid Grid.Row="0" Background="#373940">
+                <Button Width="45" Height="Auto"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 80 0"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Click="HideWindow_Click">
+
+                    <Image Source="..\ico\minimize.png"
+                                             Width="25" Height="25"
+                                             HorizontalAlignment="Center"
+                                             Margin="0 -7 0 0"
+                                             />
+                </Button>
+                <Button Name="Fullscreen"
+                        Width="45" Height="Auto"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 40 0"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"                        
+                        Click="Fullscreen_Click">
+                    <materialDesign:PackIcon Kind="Fullscreen"
+                                             Width="25" Height="20"
+                                             HorizontalAlignment="Center"/>
+                </Button>
+                <Button Name="FullscreenExit"
+                        Width="45" Height="Auto"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 40 0"
+                        Visibility="Hidden"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"                        
+                        Click="FullscreenExit_Click">
+                    <materialDesign:PackIcon Kind="FullscreenExit"
+                                             Width="25" Height="20"
+                                             HorizontalAlignment="Center"/>
+                </Button>
+                <Button Width="43" Height="Auto"
+                        HorizontalAlignment="Right"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}" 
+                        Click="CloseWindow_Click">
+                    <materialDesign:PackIcon Kind="WindowClose"
+                                             Width="27" Height="21"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             />
+                </Button>
+            </Grid>
+            <StackPanel  Grid.Row="1" Orientation="Horizontal" Background="#373940" >
                 <Image Source="../ico/book.ico"  
-                           Width="65" Height="55"
+                           Width="55" Height="45"
                            Margin="15 0 0 0"/>
                 <TextBlock x:Name="UserLogin"
                            Margin="15,20,0,10"
@@ -30,15 +84,17 @@
                            Width="140"
                            FontSize="20">
                 </TextBlock>
-                <Button Width="80" Height="60"
+                <Button Width="70" Height="50"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
                         ToolTip="Выход"
                         Margin="500 0 15 0"
                         Click="GoOut">
                     <Image Source="../ico/door.ico"
-                           Width="75" Height="55"
-                           VerticalAlignment="Center"/>
+                           Width="65" Height="45"
+                           VerticalAlignment="Center"
+                           MouseEnter="OnMouseOver"
+                           MouseLeave="OnMouseLeave"/>
                 </Button>
             </StackPanel>
             <DataGrid Grid.Row="2"

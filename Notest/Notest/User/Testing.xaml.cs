@@ -255,7 +255,7 @@ namespace Notest
             }
         }
 
-        //выход в окно пользователя
+        #region выход в окно пользователя
         private void GoOut(object sender, RoutedEventArgs e)
         {
             try
@@ -270,5 +270,18 @@ namespace Notest
                 MessageBox.Show("Невозможно выйти");
             }
         }
+
+        private void OnMouseOver(object sender, MouseEventArgs e)
+        {
+            var image = sender as Image;
+            image.Source = BitmapFrame.Create(new Uri(@"pack://application:,,,/ico/opened_door.ico"));
+        }
+
+        private void OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            var image = sender as Image;
+            image.Source = BitmapFrame.Create(new Uri(@"pack://application:,,,/ico/door.ico"));
+        }
+#endregion
     }
 }

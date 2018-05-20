@@ -56,5 +56,11 @@ namespace Notest
                 MessageBox.Show(ex.Message);
             }
         }
+        #region кнопки для окна
+        private void CloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+        #endregion
     }
 }

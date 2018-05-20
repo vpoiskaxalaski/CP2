@@ -91,7 +91,7 @@
                 <materialDesign:Card Width="450" Height="250" HorizontalAlignment="Left"  Margin="13,0,0,0">
                     <DataGrid    x:Name="AnswerDtgrd"
                                  Foreground="#373940"
-                                 Background="#e3e0de"
+                                 Background="#e3e0de"                              
                                  AutoGenerateColumns="False"
                                  materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                                  materialDesign:DataGridAssist.ColumnHeaderPadding="8">
@@ -115,7 +115,8 @@
                         ToolTip="Remove Question"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
-                        Margin="0,100,80,0">
+                        Margin="0,100,80,0"
+                        Click="AddAnswer_Click">
                     <materialDesign:PackIcon Kind="Plus"
                                              Foreground="#e3e0de"
                                               Width="30" Height="35"
@@ -123,7 +124,7 @@
                 </Button>
                 <Button  Name="RemoveAnswer"
                          Width="70" Height="45"
-                         ToolTip="Remove Answer"
+                         ToolTip="Remove Answer"                         
                          Background="{x:Null}"
                          BorderBrush="{x:Null}"
                          Margin="0,10,80,0">
