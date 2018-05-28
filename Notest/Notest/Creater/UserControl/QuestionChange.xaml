@@ -1,0 +1,159 @@
+﻿<UserControl x:Class="Notest.QuestionChange"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:Notest"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="800"
+             Margin="50 0 0 0">
+    <StackPanel>
+        <materialDesign:Card Width="800" Height="35"
+                             Margin="0,5,0,0"
+                             Background="#373940"
+                             Foreground="#e3e0de">
+            <TextBlock Text="Question"
+                       FontSize="16"
+                       Margin="10 0 0 0"/>
+        </materialDesign:Card>
+        <StackPanel Orientation="Horizontal" Width="800">
+            <RichTextBox  Name="questionText"
+                          Width="600" Height="120"
+                          FontSize="16"    
+                          SpellCheck.IsEnabled="True"
+                          Foreground="#373940"
+                          Background="#e3e0de"/>
+            <Grid Background="#e3e0de" >
+                <Image Name="PictureBox"                       
+                       Width="200" Height="120"/>
+            </Grid>
+        </StackPanel>
+        <materialDesign:Card Width="800" Height="40"
+                             Background="#373940"
+                             Foreground="#e3e0de">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Weight"
+                           FontSize="14" 
+                           VerticalAlignment="Center"
+                           Margin="25,0,0,0"/>
+                <TextBox Name="questionCosttxb"
+                         Width="50" Height="30"
+                         FontSize="16"
+                         Text="1"
+                         Margin="20,0,0,0"
+                         TextChanged="OnQuestionCostChanged"/>
+                <Button  x:Name="AddImage"
+                         Height="40" Width="130"
+                         Margin="150 0 0 0"
+                         Background="{x:Null}"
+                         BorderBrush="{x:Null}"
+                         VerticalAlignment="Top"
+                         Click="AddImage_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Add Image"
+                                   FontSize="14"
+                                   Foreground="#e3e0de"
+                                   VerticalAlignment="Center"/>
+                        <materialDesign:PackIcon Kind="ImagePlus"
+                                                 Foreground="#e3e0de"
+                                                 Width="30" Height="26"
+                                                 VerticalAlignment="Top"/>
+                    </StackPanel>
+                </Button>
+                <Button  x:Name="DeleteImage"
+                         Height="40" Width="150"
+                         Background="{x:Null}"
+                         BorderBrush="{x:Null}"
+                         VerticalAlignment="Top"
+                         Margin="100,0,0,0"
+                         Click="DeleteImage_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Delete Image"
+                                   Foreground="#e3e0de"
+                                   FontSize="14"
+                                   VerticalAlignment="Center" />
+                        <materialDesign:PackIcon Kind="ImageOff"
+                                                 Foreground="#e3e0de"
+                                                 Width="30" Height="26"
+                                                 VerticalAlignment="Top"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </materialDesign:Card>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel>
+                <materialDesign:Card Width="600" Height="40"
+                                     Background="#373940"
+                                     Foreground="#e3e0de"
+                                     Margin="0,10,0,0">
+                    <TextBlock Text="Answer"
+                               Margin="10 0 0 0"
+                               Background="#373940"
+                               Foreground="#e3e0de"
+                               FontSize="16"/>
+                </materialDesign:Card>
+                <materialDesign:Card Width="600" Height="230">
+
+                    <DataGrid    x:Name="AnswerDtgrd"
+                                 Foreground="#373940"
+                                 Background="#e3e0de"
+                                 Margin="0 0 0 0"
+                                 AutoGenerateColumns="False"
+                                 materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                                 materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Binding="{Binding IsRight}"
+                                                    Width="100"
+                                                    ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}" Header="Right"/>
+                            <materialDesign:MaterialDataGridTextColumn  Width="400"
+                                                                        Binding="{Binding Answer1}"
+                                                                        Header="Answer"
+                                                                        FontSize="16"
+                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </materialDesign:Card>
+            </StackPanel>
+            <StackPanel  Width="200">
+                <Button Width="70" Height="45"
+                        ToolTip="Remove Question"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Margin="0,80,80,0"
+                        Click="AddAnswer_Click">
+                    <materialDesign:PackIcon Kind="Plus"
+                                             Foreground="#e3e0de"
+                                              Width="30" Height="35"
+                                              Margin="5,6,0,0"/>
+                </Button>
+                <Button  x:Name="RemoveAnswer"
+                         Width="70" Height="45"
+                         ToolTip="Remove Answer"                         
+                         Background="{x:Null}"
+                         BorderBrush="{x:Null}"
+                         Margin="0,10,80,0">
+                    <materialDesign:PackIcon Kind="Minus"
+                                             Foreground="#e3e0de"
+                                             Width="30" Height="35"
+                                             Margin="5,6,0,0"/>
+                </Button>
+                <Button x:Name="SaveChanges"
+                        Width="150"
+                        Background="#373940"
+                        Foreground="#e3e0de"
+                        Margin="0 15 0 0"
+                        FontSize="14"
+                        Content="Save Changes"/>
+                <Button x:Name="Clear"
+                        Background="#373940"
+                        Foreground="#e3e0de"
+                        Width="150"
+                        Margin="0 15 0 0"
+                        FontSize="14"
+                        Content="Clear Workspace"/>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

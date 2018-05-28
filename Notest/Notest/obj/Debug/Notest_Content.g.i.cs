@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("ico/minimize.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("picture/6.jpg")]
 
 

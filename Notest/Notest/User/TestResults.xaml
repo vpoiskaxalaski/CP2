@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Notest"
         mc:Ignorable="d"
         WindowStyle="None" AllowsTransparency="True"
-        Title="Notest" Height="325" Width="600" Icon ="../ico/main.ico">
+        Title="Notest" Height="350" Width="620" Icon ="../ico/main.ico">
     <Window.Resources>
         <Style x:Key="ds" TargetType="Label">
             <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -98,25 +98,26 @@
                 </Button>
             </StackPanel>
             <DataGrid Grid.Row="2"
+                      Width="780"
                       ColumnWidth="*"
                       Name="ResultGrid"
                       AutoGenerateColumns="False"
                       CanUserAddRows="False" CanUserDeleteRows="False"
-                      AlternatingRowBackground="#a3a6af"
-                      
+                      AlternatingRowBackground="#a3a6af"                      
                       VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Auto"
                       IsReadOnly="True" 
+                      FontWeight="Medium"
                       SelectionMode="Single"
                       FrozenColumnCount="5"
-                      Margin="0,0,-0.8,-0.4"
-                      Grid.ColumnSpan="2">
+                      Margin="0,0,-1,0" >
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="40" Binding="{Binding Id}" Header="ID"/>
-                    <DataGridTextColumn Width="85" Binding="{Binding UserLogin}" Header="Логин"/>
+                    <DataGridTextColumn Width="*"
+                                        Binding="{Binding UserLogin}"
+                                        Header="Логин"                                        />
                     <DataGridTextColumn Binding="{Binding TestTheme}" Header="Тема"/>
                     <DataGridTextColumn Binding="{Binding TestName}" Header="Название"/>
-                    <DataGridTextColumn Width="84" Binding="{Binding Result}" Header="Результат"/>
+                    <DataGridTextColumn Width="*" Binding="{Binding Result}" Header="Результат"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

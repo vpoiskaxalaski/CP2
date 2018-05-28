@@ -7,11 +7,12 @@
         xmlns:local="clr-namespace:Notest"
         mc:Ignorable="d"          
         Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"       
         WindowStyle="None" AllowsTransparency="True"
         Icon ="ico\main.ico"
         Title="Notest" >
     <Window.Background>
-        <ImageBrush ImageSource="picture\time.jpg" />
+        <ImageBrush ImageSource="picture/time.jpg" />
     </Window.Background>
     <Viewbox Stretch="Uniform">
         <Grid>
@@ -65,11 +66,11 @@
                         <TextBlock TextAlignment="Center" 
                            FontSize="14"
                            Text="You already have an account?"
-                           Foreground="AntiqueWhite"  />
+                           Foreground="#f9f9fb"  />
                         <TextBlock TextAlignment="Center"
                            FontSize="14"
                            Text="Sign in to your account"
-                           Foreground="AntiqueWhite" />
+                           Foreground="#f9f9fb" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Name="Login"
@@ -103,13 +104,14 @@
                     </StackPanel>
                     <Button  Name="LoginButton"
                      Click="LoginButton_Click"
-                     Foreground="#182d49"
+                     Foreground="#f9f9fb"
                      Width="85"
                      Margin="80 20 0 0"
                      Content="Login"/>
+  
                 </StackPanel>
                 <TextBlock Grid.Column="1"
-                       Foreground="#f7f7e2"
+                       Foreground="#f9f9fb"
                        Text="Or"
                        FontSize="40"
                        VerticalAlignment="Center"
@@ -122,11 +124,11 @@
                         <TextBlock TextAlignment="Center"
                            FontSize="14"
                            Text="Do not have an account?"
-                           Foreground="AntiqueWhite"/>
+                           Foreground="#f9f9fb"/>
                         <TextBlock TextAlignment="Center"
                            FontSize="14"
                            Text="Register now"
-                           Foreground="AntiqueWhite"/>
+                           Foreground="#f9f9fb"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"  >
                         <TextBox Name="NewLogin"
@@ -158,13 +160,13 @@
                     </StackPanel>
                     <TextBlock FontSize="14"
                        Text="User Type"
-                       Foreground="AntiqueWhite"
+                       Foreground="#f9f9fb"
                        TextAlignment="Center"
                        Margin="0 15 0 0"/>
                     <ComboBox Name="UserType"
                       Width="150"
                       Margin="0 5 0 0"
-                      Foreground="AntiqueWhite"
+                      Foreground="#f9f9fb"
                       HorizontalContentAlignment="Center" >
                         <ComboBoxItem IsSelected="True"
                           HorizontalAlignment="Center"
@@ -174,10 +176,10 @@
                     </ComboBox>
                     <Button Name="registrationButton"
                     Width="85"
-                    Margin="80 20 0 0"
+                    Margin="80 40 0 0"
                     Click="OnRegisterButton_Click"
                     Content="Register"
-                    Foreground="#182d49" />
+                    Foreground="#f9f9fb" />
                 </StackPanel>
             </Grid>
         </Grid>

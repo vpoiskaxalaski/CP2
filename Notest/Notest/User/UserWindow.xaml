@@ -11,7 +11,7 @@
         WindowStyle="None" AllowsTransparency="True"
         Icon ="../ico/main.ico">
     <Window.Background>
-        <ImageBrush ImageSource="..\picture\1.jpg" />
+        <ImageBrush ImageSource="../picture/1.jpg" />
     </Window.Background>
     <Window.Resources>
         <Style x:Key="ds" TargetType="Label">
@@ -90,7 +90,21 @@
                            Width="140"
                            FontSize="20">
                 </TextBlock>
-                <Button Width="80" Height="60"
+                <Button Width="65" Height="45" Background="#373940" BorderBrush="#373940" Margin="471,8,310.4,7.8" Click="OnWatchResults">
+                    <materialDesign:PackIcon Kind="Table"
+                                                 Foreground="#e3e0de"
+                                                 Width="Auto" Height="Auto"
+                                                 HorizontalAlignment="Center"/>
+                </Button>
+                <Label Height="45" Foreground="Azure" VerticalContentAlignment="Center" Margin="541,8,204,7.8">Мои результаты</Label>
+                <Button Width="65" Height="45" Background="#373940" BorderBrush="#373940" Margin="220,8,561.4,7.8" Click="OnChanging" Padding="0,0,0,0">
+                    <materialDesign:PackIcon Kind="Rotate3d"
+                                                 Foreground="#e3e0de"
+                                                 Width="Auto" Height="Auto"
+                                                 HorizontalAlignment="Center"/>
+                </Button>
+                <Label Height="45" Margin="285,8,440.4,7.8" Foreground="Azure" VerticalContentAlignment="Center">Поиск/Выбор теста</Label>
+                <Button Width="100" Height="60"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
                         ToolTip="Выход"
@@ -105,9 +119,20 @@
                 </Button>
             </Grid>
 
-            <StackPanel Grid.Row="2" Height="350" Orientation="Vertical" Margin="287,10,233,120" >
+            <StackPanel Grid.Row="2" Orientation="Vertical" Background="White" Name="First">
                 <Viewbox>
-                    <TabControl Width="326" Height="274" Background="{x:Null}">
+                    <DataGrid Name="TestGrid" VerticalScrollBarVisibility="Auto" Width="800" Height="490" SelectionChanged="Test_SelectionChanged" ColumnWidth="*"
+                              HorizontalScrollBarVisibility="Auto" IsReadOnly="True">
+                        <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
+                        <DataGridTextColumn Binding="{Binding Topic}" Header="Тема"/>
+                        <DataGridTextColumn Binding="{Binding Header}" Header="Название"/>
+                        <DataGridTextColumn Binding="{Binding Author}" Header="Author"/>
+                    </DataGrid>
+                </Viewbox>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Height="350" Orientation="Vertical" Margin="287,10,233,120" Name="Second" Visibility="Collapsed">
+                <Viewbox>
+                    <TabControl Width="326" Height="274" Background="{x:Null}" Name="Tabs">
                         <TabItem Header="Поиск по теме"
                                  Background="{x:Null}"
                                  GotFocus="OnSearchTypeSelected"

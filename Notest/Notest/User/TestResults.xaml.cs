@@ -41,7 +41,7 @@ namespace Notest
                 }
                 ResultGrid.ItemsSource = completedTests;
             }
-          
+
         }
         #region выход в окно регистрации/входа
         private void GoOut(object sender, RoutedEventArgs e)
@@ -94,5 +94,7 @@ namespace Notest
             Fullscreen.Visibility = Visibility.Visible;
         }
         #endregion
+
+     
     }
 }

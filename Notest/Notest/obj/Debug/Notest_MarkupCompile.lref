@@ -1,12 +1,13 @@
 ﻿
 FE:\University\CP\Notest\Notest\App.xaml;;
-FE:\University\CP\Notest\Notest\Creator\AddQuestions.xaml;;
-FE:\University\CP\Notest\Notest\Creator\CreaterWindow.xaml;;
-FE:\University\CP\Notest\Notest\Creator\FindTest_Dialog.xaml;;
+FE:\University\CP\Notest\Notest\Creater\AddQuestions.xaml;;
+FE:\University\CP\Notest\Notest\Creater\CreaterWindow.xaml;;
+FE:\University\CP\Notest\Notest\Creater\FindTest_Dialog.xaml;;
 FE:\University\CP\Notest\Notest\MainWindow.xaml;;
-FE:\University\CP\Notest\Notest\Creator\NewTest_Dialog.xaml;;
-FE:\University\CP\Notest\Notest\Creator\UserControl\QuestionChange.xaml;;
-FE:\University\CP\Notest\Notest\User\Testing.xaml;;
+FE:\University\CP\Notest\Notest\Creater\NewTest_Dialog.xaml;;
+FE:\University\CP\Notest\Notest\Creater\UserControl\QuestionChange.xaml;;
+FE:\University\CP\Notest\Notest\User\ChooseTest.xaml;;
+FE:\University\CP\Notest\Notest\User\MyResults.xaml;;
 FE:\University\CP\Notest\Notest\User\TestResults.xaml;;
 FE:\University\CP\Notest\Notest\User\UserWindow.xaml;;
 

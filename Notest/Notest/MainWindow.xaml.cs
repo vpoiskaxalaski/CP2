@@ -26,7 +26,7 @@ namespace Notest
             if (isLoginCorrect && isPasswordCorrect)
             {
                 try
-                {                                         
+                {
                     User user = new User
                     {
                         Login = NewLogin.Text,
@@ -38,11 +38,10 @@ namespace Notest
 
                     // Создание подключения                  
                     using (Context db = new Context())
-                    {                     
+                    {
                         // добавляем их в бд
                         db.Users.Add(user);
-                        db.SaveChanges();
-                        MessageBox.Show("Welcome, " + Class.CurrentUser.user.Login + " !", "", MessageBoxButton.OK, MessageBoxImage.None);
+                        db.SaveChanges();                        
 
                         switch (UserType.SelectedIndex)
                         {
@@ -61,7 +60,7 @@ namespace Notest
                 }
                 catch
                 {
-                   
+
                 }
             }
         }
@@ -82,18 +81,18 @@ namespace Notest
                         Password = Validation.GetHashString(Password.Password)
                     };
                     Class.CurrentUser.user = user;
-                 
+
                     using (Context db = new Context())
                     {
                         var users = db.Users;
-                        bool isUserFind = false;                       
+                        bool isUserFind = false;
 
                         foreach (User u in users)
                         {
                             if (user.Password == u.Password && user.Login == u.Login)
                             {
                                 isUserFind = true;
-                                MessageBox.Show("Welcome, " + Class.CurrentUser.user.Login + " !", "", MessageBoxButton.OK, MessageBoxImage.None);
+                               
                                 if (u.UserType == "User")
                                 {
                                     UserWindow userWindow = new UserWindow();
@@ -106,9 +105,9 @@ namespace Notest
                                     createrWindow.Show();
                                     this.Close();
                                 }
-                            }                            
+                            }
                         }
-                        if(isUserFind == false)
+                        if (isUserFind == false)
                         {
                             MessageBox.Show("Check the entered data", "", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
@@ -130,7 +129,7 @@ namespace Notest
         private void HideWindow_Click(object sender, RoutedEventArgs e)
         {
             SystemCommands.MinimizeWindow(this);
-        }        
+        }
         #endregion
 
 
