@@ -125,6 +125,7 @@
                     <Button Name="SaveTest"
                             Width="90" Height="60"
                             Margin="0 -7 0 0"
+                            IsEnabled="False"
                             Background="{x:Null}"
                             BorderBrush="{x:Null}"  
                             Click="SaveTest_Click" >

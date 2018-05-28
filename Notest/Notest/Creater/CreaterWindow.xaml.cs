@@ -128,6 +128,7 @@ namespace Notest
 
                     CurrentTest.test.Author = UserLogin.Text;
                     PrintTest.IsEnabled = true;
+                    SaveTest.IsEnabled = true;
                 }
             }
             catch
@@ -194,7 +195,11 @@ namespace Notest
                     }
                     MessageBox.Show("Test saved", "", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                 }
-            }
+                else
+                {
+                    MessageBox.Show("There is nothing to save", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+        }
             catch
             {
                 MessageBox.Show("It is not possible to save", "", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -217,6 +222,7 @@ namespace Notest
                     QuestionTools.Visibility = Visibility;
                     AddQuestionFromDb.Visibility = Visibility;
                     questionChangePanel.IsEnabled = true;
+                    SaveTest.IsEnabled = true;
                     PrintTest.IsEnabled = true;
 
                     //добавление названия теста
@@ -245,7 +251,11 @@ namespace Notest
             {
                 CurrentTest.Print();
             }
-                          
+            else
+            {
+                MessageBox.Show("There is nothing to save", "", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
 
         //добавить вопрос
@@ -334,7 +344,7 @@ namespace Notest
             try
             {
                 MessageBoxResult result = MessageBox.Show("Are you shure?", "", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.OK)
+                if (result == MessageBoxResult.Yes)
                 {
                     string selectedQuestion = question_ListBox.SelectedItem.ToString().Remove(0, question_ListBox.SelectedItem.ToString().IndexOf('.') + 2);
                     int index = question_ListBox.SelectedIndex;

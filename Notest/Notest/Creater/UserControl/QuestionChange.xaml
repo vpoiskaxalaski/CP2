@@ -21,7 +21,6 @@
             <RichTextBox  Name="questionText"
                           Width="600" Height="120"
                           FontSize="16"    
-                          SpellCheck.IsEnabled="True"
                           Foreground="#373940"
                           Background="#e3e0de"/>
             <Grid Background="#e3e0de" >
@@ -118,7 +117,7 @@
             </StackPanel>
             <StackPanel  Width="200">
                 <Button Width="70" Height="45"
-                        ToolTip="Remove Question"
+                        ToolTip="Add Answer"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
                         Margin="0,80,80,0"

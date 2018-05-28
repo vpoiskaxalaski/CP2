@@ -28,7 +28,7 @@ namespace Notest
             {
                 if (Regex.IsMatch(questionCosttxb.Text[i].ToString(), regex) == false)
                 {
-                    questionCosttxb.ToolTip = "Неккоректные данные";
+                    questionCosttxb.ToolTip = "Wrong symbol";
                     questionCosttxb.BorderBrush = new SolidColorBrush(Colors.IndianRed);
                 }
             }

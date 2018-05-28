@@ -317,3 +317,4 @@ E:\University\CP\Notest\Notest\obj\Debug\Creater\FindTest_Dialog.baml
 E:\University\CP\Notest\Notest\obj\Debug\Creater\NewTest_Dialog.baml
 E:\University\CP\Notest\Notest\obj\Debug\Creater\UserControl\QuestionChange.baml
 E:\University\CP\Notest\Notest\obj\Debug\User\MyResults.baml
+E:\University\CP\Notest\Notest\obj\Debug\Notest.csprojAssemblyReference.cache

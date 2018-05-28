@@ -128,7 +128,7 @@ namespace Notest
                 if (Validation.NoRepeatLogin(login.Text) == false)
                 {
                     valid = false;
-                    toolTip.Content = "Данный логин уже существует";
+                    toolTip.Content = "This nickname is already in use";
                 }
             }
 

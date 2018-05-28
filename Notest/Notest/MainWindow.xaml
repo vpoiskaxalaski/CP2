@@ -132,6 +132,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"  >
                         <TextBox Name="NewLogin"
+                         ToolTip="You can only use numbers and letters of the Latin alphabet"
                          Margin="50 20 0 0"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          Width="150"
@@ -147,6 +148,7 @@
                     </StackPanel>
                     <StackPanel Margin="50 0 0 0"  Orientation="Horizontal" >
                         <PasswordBox Name="NewPassword"
+                                      ToolTip="You can only use numbers and letters of the Latin alphabet"
                              Width="150"
                              MaxLength="8"
                              Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"

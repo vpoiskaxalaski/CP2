@@ -32,20 +32,23 @@
             VerticalAlignment="Center"              
             Margin="15"
             Opacity="0.7"/>
-        <ListView Name="AllTests"
+        <ScrollViewer 
+                  VerticalAlignment="Center"                   
+                  Height="350" Margin="50,75">
+            <ListView Name="AllTests"
                   HorizontalAlignment="Center"
-                  VerticalAlignment="Center"                  
-                  Height="350" Width="300"
-                  Margin="64,60">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Topic}"
+                  VerticalAlignment="Center"                   
+                  Height="350" Width="300">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Topic}"
                                     Header="Topic" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Header}"
+                        <GridViewColumn DisplayMemberBinding="{Binding Header}"
                                     Header="Header" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </ScrollViewer>
         <Button Name="FindTestButton"
                 Width="90" Height="35"
             HorizontalAlignment="Right"
