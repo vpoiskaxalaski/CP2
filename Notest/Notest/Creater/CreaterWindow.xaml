@@ -23,7 +23,7 @@
         </Style>
     </Window.Resources>
     <Viewbox Stretch="Fill">
-        <Grid>
+        <Grid AllowDrop="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="25"/>
                 <RowDefinition Height="60"/>
@@ -214,10 +214,11 @@
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
                         ToolTip="Exit"
+                        IsCancel="True"
                         Margin="0 0 15 0"
                         Click="GoOut">
                     <Image Source="../ico/door.ico"
-                           Width="75" Height="55"
+                           Width="75" Height="55"                           
                            VerticalAlignment="Center"
                             MouseEnter="OnMouseOver"
                            MouseLeave="OnMouseLeave"/>
@@ -226,21 +227,24 @@
             <StackPanel Name="TestToolsWindow"
                         Orientation="Horizontal"
                         Grid.Row="2">
+                <Viewbox Stretch="Uniform">
                 <StackPanel Name="QuestionList" Width="250">
                     <TextBlock Name="NameTest"
                                FontSize="25"
+                               Width="240"
+                               TextWrapping="Wrap"
                                Foreground="#e3e0de"
                                Margin="10,0,0,10"/>
                     <ListBox Name="question_ListBox"
-                             Height="350" Width="200"
-                             Margin="0 20 0 0"
+                             Height="350" Width="220"
+                             Margin="0 20 0 0"                             
                              Foreground="#e3e0de"
                              SelectionChanged="question_ListBox_SelectionChanged" />
                     <Button Name="AddQuestionFromDb"
                         Width="60" Height="50"
                             Visibility="Hidden"
                             HorizontalAlignment="Right"
-                            Margin="20"
+                            Margin="10"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"                         
                         ToolTip="Add a question from the list"
@@ -251,6 +255,7 @@
                                                  Foreground="#f0e9dd"/>
                     </Button>
                 </StackPanel>
+                </Viewbox>
             </StackPanel>
         </Grid>
     </Viewbox>

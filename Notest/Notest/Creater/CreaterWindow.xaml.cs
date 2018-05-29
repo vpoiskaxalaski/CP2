@@ -99,6 +99,7 @@ namespace Notest
             questionChangePanel.questionCosttxb.BorderBrush = new SolidColorBrush(Colors.Gray);
             questionChangePanel.AnswerDtgrd.ItemsSource = answerList;
             questionChangePanel.AnswerDtgrd.Items.Refresh();
+            question_ListBox.SelectedIndex = -1;
         }
 
         #endregion
@@ -171,8 +172,12 @@ namespace Notest
 
                         foreach (Question question in questions)
                         {
-                            db.Answers.RemoveRange(db.Answers.Where(a => a.Question_Id == question.Id));
-                            db.SaveChanges();
+                            if(question.Answers.Count!=0)
+                            {
+                                db.Answers.RemoveRange(db.Answers.Where(a => a.Question_Id == question.Id));
+                                db.SaveChanges();
+                            }
+                            
                         }
 
                         db.Questions.RemoveRange(db.Questions.Where(q => q.Test_Id == CurrentTest.test.Id));
@@ -519,7 +524,12 @@ namespace Notest
         #region кнопки для окна
         private void CloseWindow_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            MessageBoxResult dialogResult = MessageBox.Show("Are you shure?", "", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (dialogResult == MessageBoxResult.Yes)
+            {
+                Close();  
+            }
+
         }
 
         private void HideWindow_Click(object sender, RoutedEventArgs e)

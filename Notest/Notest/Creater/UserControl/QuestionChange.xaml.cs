@@ -21,6 +21,7 @@ namespace Notest
         private void OnQuestionCostChanged(object sender, TextChangedEventArgs e)
         {
             questionCosttxb.ToolTip = "";
+
             questionCosttxb.BorderBrush = new SolidColorBrush(Colors.Gray);
             string regex = @"[0-9]";
 
@@ -31,6 +32,12 @@ namespace Notest
                     questionCosttxb.ToolTip = "Wrong symbol";
                     questionCosttxb.BorderBrush = new SolidColorBrush(Colors.IndianRed);
                 }
+            }
+
+            if(questionCosttxb.Text.Length ==0)
+            {
+                questionCosttxb.ToolTip = "This field can't be empty";
+                questionCosttxb.BorderBrush = new SolidColorBrush(Colors.IndianRed);
             }
         }
 
@@ -43,7 +50,7 @@ namespace Notest
             {
                 OpenFileDialog op = new OpenFileDialog
                 {
-                    InitialDirectory = "E:\\Pictures\\fon",
+                    InitialDirectory = "E:\\University\\CP\\test",
                     Title = "Select a picture",
                     Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
                   "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +

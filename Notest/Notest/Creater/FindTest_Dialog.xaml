@@ -34,11 +34,12 @@
             Opacity="0.7"/>
         <ScrollViewer 
                   VerticalAlignment="Center"                   
-                  Height="350" Margin="50,75">
+                  Height="350" Width="300">
             <ListView Name="AllTests"
+                      SelectionMode="Single"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"                   
-                  Height="350" Width="300">
+                  Height="350" Width="285">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Topic}"

@@ -19,13 +19,17 @@
         </materialDesign:Card>
         <StackPanel Orientation="Horizontal" Width="800">
             <RichTextBox  Name="questionText"
+                          SpellCheck.IsEnabled="True"
+                          Language="ru-ru"                          
                           Width="600" Height="120"
                           FontSize="16"    
                           Foreground="#373940"
                           Background="#e3e0de"/>
-            <Grid Background="#e3e0de" >
-                <Image Name="PictureBox"                       
+            <Grid Background="#e3e0de">
+                <Viewbox Stretch="Fill">
+                    <Image Name="PictureBox"                       
                        Width="200" Height="120"/>
+                </Viewbox>               
             </Grid>
         </StackPanel>
         <materialDesign:Card Width="800" Height="40"
@@ -39,6 +43,7 @@
                 <TextBox Name="questionCosttxb"
                          Width="50" Height="30"
                          FontSize="16"
+                         MaxLength="3"
                          Text="1"
                          Margin="20,0,0,0"
                          TextChanged="OnQuestionCostChanged"/>
@@ -103,10 +108,10 @@
                                  materialDesign:DataGridAssist.ColumnHeaderPadding="8">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Binding="{Binding IsRight}"
-                                                    Width="100"
+                                                    Width="80"
                                                     ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
                                                     EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}" Header="Right"/>
-                            <materialDesign:MaterialDataGridTextColumn  Width="400"
+                            <materialDesign:MaterialDataGridTextColumn  Width="*"
                                                                         Binding="{Binding Answer1}"
                                                                         Header="Answer"
                                                                         FontSize="16"
@@ -144,7 +149,7 @@
                         Foreground="#e3e0de"
                         Margin="0 15 0 0"
                         FontSize="14"
-                        Content="Save Changes"/>
+                        Content="SaveChanges"/>
                 <Button x:Name="Clear"
                         Background="#373940"
                         Foreground="#e3e0de"

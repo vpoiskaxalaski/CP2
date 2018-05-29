@@ -8,7 +8,9 @@ using System.Windows.Forms;
 using System.Reflection;
 using Word = Microsoft.Office.Interop.Word;
 using Office = Microsoft.Office.Core;
-
+using System.Drawing;
+using System.Windows.Media.Imaging;
+using System.Drawing.Imaging;
 
 namespace Notest
 {
@@ -28,8 +30,8 @@ namespace Notest
                     if (sfd.ShowDialog() == DialogResult.OK)
                     {
                         using (StreamWriter sw = new StreamWriter(sfd.OpenFile()))
-                        {                        
-                            sw.WriteLine(test.Header.PadLeft(100));
+                        {
+                            sw.WriteLine(test.Header.ToUpper());
                             sw.WriteLine();
                             int QuestionCount = 1;
 
@@ -37,7 +39,7 @@ namespace Notest
                             {
                                 sw.WriteLine(QuestionCount.ToString() + ". " + q.Question1);
                                 QuestionCount++;
-
+                                                               
                                 int AnswerCount = 0;
                                 foreach (Answer a in q.Answers)
                                 {
@@ -50,9 +52,9 @@ namespace Notest
                     }
                     MessageBox.Show("The test is ready to print", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                catch 
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Print error", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Print error: "+ ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
