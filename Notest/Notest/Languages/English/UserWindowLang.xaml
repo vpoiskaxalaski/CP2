@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Notest.Languages.English"
+                    xmlns:lang="clr-namespace:System;assembly=mscorlib">
+    <lang:String x:Key="myRes">My results</lang:String>
+    <lang:String x:Key="seaselTest">Search/select test</lang:String>
+    <lang:String x:Key="author">Author</lang:String>
+    <lang:String x:Key="selTopic">Select a topic</lang:String>
+    <lang:String x:Key="selHead">Select a header</lang:String>
+    <lang:String x:Key="byTop">By topic</lang:String>
+    <lang:String x:Key="byHead">By header</lang:String>
+    <lang:String x:Key="selTest">Select a test</lang:String>
+</ResourceDictionary>

@@ -8,11 +8,12 @@
         Title="MyResults" Height="300" Width="600" WindowStartupLocation="CenterScreen">
     <Grid>
         <DataGrid Grid.Row="2" ColumnWidth="*" Name="ResultGrid" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto"
-                  HorizontalScrollBarVisibility="Auto" IsReadOnly="True" FrozenColumnCount="5" Margin="0,0,-0.8,-0.4" Grid.ColumnSpan="2">
+                  HorizontalScrollBarVisibility="Auto" IsReadOnly="True" Margin="0,0,-0.8,-0.4" Grid.ColumnSpan="2">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding TestTheme}" Header="Тема"/>
-                <DataGridTextColumn Binding="{Binding TestName}" Header="Название"/>
-                <DataGridTextColumn Width="84" Binding="{Binding Result}" Header="Результат"/>
+                <DataGridTextColumn Binding="{Binding TestTheme}" Header="{DynamicResource topic}"/>
+                <DataGridTextColumn Binding="{Binding TestName}" Header="{DynamicResource header}"/>
+                <DataGridTextColumn Width="84" Binding="{Binding Result}" Header="{DynamicResource result}"/>
+                <DataGridTextColumn Width="120" Binding="{Binding Date}" Header="{DynamicResource date}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

@@ -2,7 +2,6 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Notest"
-             ShutdownMode="OnLastWindowClose"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -13,6 +12,24 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Grey.xaml" />
+                <ResourceDictionary Source="Styles\CloseButton.xaml"/>
+                <ResourceDictionary Source="Styles\JustButton.xaml"/>
+                <ResourceDictionary Source="Languages\English\CreaterWindowLang.xaml"/>
+                <ResourceDictionary Source="Languages\English\FindTestLang.xaml"/>
+                <ResourceDictionary Source="Languages\English\MainWindowLang.xaml"/>
+                <ResourceDictionary Source="Languages\English\NewTestLang.xaml"/>
+                <ResourceDictionary Source="Languages\English\QuestionChangeLang.xaml"/>
+                <ResourceDictionary Source="Languages\English\TestResultsLang.xaml"/>
+                <ResourceDictionary Source="Languages\English\UserWindowLang.xaml"/>
+                <ResourceDictionary Source="Languages\English\NotificationLang.xaml"/>
+                <ResourceDictionary Source="Languages\Русский\CreaterWindowLang.xaml"/>
+                <ResourceDictionary Source="Languages\Русский\FindTestLang.xaml"/>
+                <ResourceDictionary Source="Languages\Русский\MainWindowLang.xaml"/>
+                <ResourceDictionary Source="Languages\Русский\NewTestLang.xaml"/>
+                <ResourceDictionary Source="Languages\Русский\QuestionChangeLang.xaml"/>
+                <ResourceDictionary Source="Languages\Русский\TestResultsLang.xaml"/>
+                <ResourceDictionary Source="Languages\Русский\UserWindowLang.xaml"/>
+                <ResourceDictionary Source="Languages\Русский\NotificationLang.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

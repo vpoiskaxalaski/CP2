@@ -34,24 +34,36 @@ namespace Notest
             }
         }
 
+        // начало поиска по теме: ввод в textbox ByTopic
         private void OnSearchBeginByTheme(object sender, TextChangedEventArgs e)
+        {
+            ClearByTopic();
+            if (ByTopic.Text != "")
+            {
+                using (Context db = new Context())
+                {
+                    var topics = from test in db.Tests where test.Topic.StartsWith(ByTopic.Text) select test.Topic;
+                    if (topics.Count() > 0)
+                    {
+                        testList.Clear();
+                        SelectedTopics.IsEnabled = true;
+                        foreach (string topic in topics)
+                        {
+                            SelectedTopics.Items.Add(topic);
+                        }
+                        SelectedTopics.SelectedItem = SelectedTopics.Items[0];
+                    }
+                }
+            }
+        }
+
+        // очистка таба поиска по теме
+        private void ClearByTopic()
         {
             SelectedHeaders.Items.Clear();
             SelectedTopics.Items.Clear();
-            using (Context db = new Context())
-            {
-                var topics = from test in db.Tests where test.Topic.StartsWith(ByTopic.Text) select test.Topic;
-                if (topics.Count() > 0)
-                {
-                    testList.Clear();
-                    SelectedTopics.IsEnabled = true;
-                    foreach (string topic in topics)
-                    {
-                        SelectedTopics.Items.Add(topic);
-                    }
-                    SelectedTopics.SelectedItem = SelectedTopics.Items[0];
-                }
-            }
+            SelectedHeaders.IsEnabled = false;
+            SelectedTopics.IsEnabled = false;
         }
 
         private void OnTopicSelected(object sender, SelectionChangedEventArgs e)
@@ -100,30 +112,43 @@ namespace Notest
 
         private void OnSearchBeginByHeader(object sender, TextChangedEventArgs e)
         {
-            Headers.Items.Clear();
-            testList.Clear();
-            using (Context db = new Context())
+            ClearByHeader();
+            if (ByHeader.Text != "")
             {
-                var tests = from test in db.Tests where test.Header.StartsWith(ByHeader.Text) select test;
-                if (tests.Count() > 0)
+                using (Context db = new Context())
                 {
-                    Headers.IsEnabled = true;
-                    foreach (Test test in tests)
+                    var tests = from test in db.Tests where test.Header.StartsWith(ByHeader.Text) select test;
+                    if (tests.Count() > 0)
                     {
-                        Headers.Items.Add(test.Header);
-                        testList.Add(test);
+                        Headers.IsEnabled = true;
+                        foreach (Test test in tests)
+                        {
+                            Headers.Items.Add(test.Header);
+                            testList.Add(test);
+                        }
+                        Headers.SelectedItem = Headers.Items[0];
                     }
-                    Headers.SelectedItem = Headers.Items[0];
                 }
             }
         }
 
+        // очистить таб поиска по названию
+        private void ClearByHeader()
+        {
+            Headers.Items.Clear();
+            testList.Clear();
+            Headers.IsEnabled = false;
+        }
+
+        // при нажатии кнопки выбора теста
         private void OnChooseTest(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show($"Выбрать тест {Header.Content}?", "Уверены?", MessageBoxButton.YesNo);
+            var headerTest = Header.Content != null ? Header.Content : "\\_(^_^)_/";
+            var result = MessageBox.Show($"{(string)Application.Current.Resources["questSelect"]} \"{headerTest}\"?",
+                (string)Application.Current.Resources["sure"], MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
-                if ((string)Header.Content != "")
+                if ((string)Header.Content != null)
                 {
                     ChooseTest chooseTest = new ChooseTest();
                     chooseTest.Show();
@@ -131,7 +156,7 @@ namespace Notest
                 }
                 else
                 {
-                    GetStatus("Вы не выбрали тест!", 2);
+                    MessageBox.Show((string)Application.Current.Resources["noTest"]);
                     e.Handled = true;
                 }
             }
@@ -149,77 +174,25 @@ namespace Notest
             }
         }
 
-        private void GetStatus(string message, int level) // 0 - всё хорошо, 1 - есть недочёты, 2 - критическая ошибка
-        {
-            Status.Content = message;
-            Status.FontStyle = FontStyles.Italic;
-            Status.FontWeight = FontWeights.Bold;
-            switch (level)
-            {
-                case 0:
-                    Status.Background = new SolidColorBrush(Color.FromArgb(0xaa, 0x00, 0xff, 0x00));
-                    break;
-                case 1:
-                    Status.Background = new SolidColorBrush(Color.FromArgb(0xaa, 0xff, 0xff, 0x80));
-                    break;
-                case 2:
-                    Status.Background = new SolidColorBrush(Color.FromArgb(0xaa, 0xff, 0x00, 0x00));
-                    break;
-                default:
-                    Status.Background = new SolidColorBrush(Color.FromArgb(0xaa, 0xba, 0xac, 0xc7));  // очень светлый пурпурно-синий
-                    break;
-            }
-        }
-
-        private void OnLoadedWindow(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void OnCloseWindow(object sender, EventArgs e)
-        {
-
-        }
-
-        private void OnTabChanged(object sender, SelectionChangedEventArgs e)
-        {
-            TabControl tabs = sender as TabControl;
-            tab = (Search)tabs.SelectedIndex;
-        }
-
+        // вызывается при выборе другого таба
         private void OnSearchTypeSelected(object sender, RoutedEventArgs e)
         {
             var selectedTab = sender as TabItem;
-            if (selectedTab.Header.ToString().Equals("Поиск по теме"))
+            if (selectedTab.Header.ToString().Equals("By topic"))
             {
                 tab = Search.Topic;
-                DisposeHeader();
+                ByHeader.Text = "";
+                ClearByHeader();
             }
             else
             {
                 tab = Search.Header;
-                DisposeTopic();
+                ByTopic.Text = "";
+                ClearByTopic();
             }
         }
 
-        private void DisposeTopic()
-        {
-            ByTopic.Text = "";
-            SelectedHeaders.Items.Clear();
-            SelectedHeaders.IsEnabled = false;
-            SelectedTopics.Items.Clear();
-            SelectedTopics.IsEnabled = false;
-        }
-
-        private void DisposeHeader()
-        {
-            ByHeader.Text = "";
-            Headers.Items.Clear();
-            Headers.IsEnabled = false;
-        }
-        
-        
-
-         //выход в окно регистрации/входа
+        //выход в окно регистрации/входа
         private void GoOut(object sender, RoutedEventArgs e)
         {
             try
@@ -230,16 +203,18 @@ namespace Notest
             }
             catch
             {
-                MessageBox.Show("Невозможно выйти");
+                MessageBox.Show((string)Application.Current.Resources["impo"]);
             }
         }
 
+        // дверь открывается
         private void OnMouseOver(object sender, MouseEventArgs e)
         {
             var image = sender as Image;
             image.Source = BitmapFrame.Create(new Uri(@"pack://application:,,,/ico/opened_door.ico"));
         }
 
+        // дверь закрывается
         private void OnMouseLeave(object sender, MouseEventArgs e)
         {
             var image = sender as Image;

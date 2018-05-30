@@ -22,10 +22,9 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="25"/>
-                <RowDefinition Height="50"/>
                 <RowDefinition Height="250"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Background="#373940">
+            <Grid Grid.Row="0" Background="#7a6e6c">
                 <Button Width="45" Height="Auto"
                         HorizontalAlignment="Right"
                         Margin="0 0 80 0"
@@ -73,31 +72,9 @@
                                              VerticalAlignment="Center"
                                              />
                 </Button>
-            </Grid>
-            <StackPanel  Grid.Row="1" Orientation="Horizontal" Background="#373940" >
-                <Image Source="../ico/book.ico"  
-                           Width="55" Height="45"
-                           Margin="15 0 0 0"/>
-                <TextBlock x:Name="UserLogin"
-                           Margin="15,20,0,10"
-                           Foreground="#e3e0de"
-                           Width="140"
-                           FontSize="20">
-                </TextBlock>
-                <Button Width="70" Height="50"
-                        Background="{x:Null}"
-                        BorderBrush="{x:Null}"
-                        ToolTip="Выход"
-                        Margin="500 0 15 0"
-                        Click="GoOut">
-                    <Image Source="../ico/door.ico"
-                           Width="65" Height="45"
-                           VerticalAlignment="Center"
-                           MouseEnter="OnMouseOver"
-                           MouseLeave="OnMouseLeave"/>
-                </Button>
-            </StackPanel>
+            </Grid>          
             <DataGrid Grid.Row="2"
+                      
                       Width="780"
                       ColumnWidth="*"
                       Name="ResultGrid"
@@ -114,10 +91,11 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*"
                                         Binding="{Binding UserLogin}"
-                                        Header="Логин"                                        />
-                    <DataGridTextColumn Binding="{Binding TestTheme}" Header="Тема"/>
-                    <DataGridTextColumn Binding="{Binding TestName}" Header="Название"/>
-                    <DataGridTextColumn Width="*" Binding="{Binding Result}" Header="Результат"/>
+                                        Header="{DynamicResource login}"                                        />
+                    <DataGridTextColumn Binding="{Binding TestTheme}" Header="{DynamicResource topic}"/>
+                    <DataGridTextColumn Binding="{Binding TestName}" Header="{DynamicResource header}"/>
+                    <DataGridTextColumn Width="*" Binding="{Binding Result}" Header="{DynamicResource result}"/>
+                    <DataGridTextColumn Width="*" Binding="{Binding Date}" Header="{DynamicResource date}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

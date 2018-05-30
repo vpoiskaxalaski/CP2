@@ -26,49 +26,22 @@ namespace Notest
             {
                 var completed = from compl in db.CompletedTest select compl;
                 List<Class.Completed> completedTests = new List<Class.Completed>();
-                foreach (CompletedTest test in completed)
+                foreach (CompletedTest test in completed) // в таблице CompletedTest хранится только Id теста
                 {
-                    var currentTest = db.Tests.Where(t => t.Id == test.TestId).First();
+                    var currentTest = db.Tests.Where(t => t.Id == test.TestId).First(); // поэтому мы берём название и тему из таблицы Tests по Id выполненного теста
                     Class.Completed compl = new Class.Completed
                     {
-                        Id = test.Id,
                         UserLogin = test.UserLogin,
                         TestName = currentTest.Header,
                         TestTheme = currentTest.Topic,
-                        Result = test.Result
+                        Result = test.Result,
+                        Date = test.Date
                     };
                     completedTests.Add(compl);
                 }
                 ResultGrid.ItemsSource = completedTests;
             }
-
         }
-        #region выход в окно регистрации/входа
-        private void GoOut(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                MainWindow startWindow = new MainWindow();
-                Close();
-                startWindow.Show();
-            }
-            catch
-            {
-                MessageBox.Show("Невозможно выйти");
-            }
-        }
-        private void OnMouseOver(object sender, MouseEventArgs e)
-        {
-            var image = sender as Image;
-            image.Source = BitmapFrame.Create(new Uri(@"pack://application:,,,/ico/opened_door.ico"));
-        }
-
-        private void OnMouseLeave(object sender, MouseEventArgs e)
-        {
-            var image = sender as Image;
-            image.Source = BitmapFrame.Create(new Uri(@"pack://application:,,,/ico/door.ico"));
-        }
-        #endregion
         #region кнопки для окна
         private void CloseWindow_Click(object sender, RoutedEventArgs e)
         {
@@ -94,7 +67,5 @@ namespace Notest
             Fullscreen.Visibility = Visibility.Visible;
         }
         #endregion
-
-     
     }
 }

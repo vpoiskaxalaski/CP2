@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Notest.Languages.Русский"
+                    xmlns:lang="clr-namespace:System;assembly=mscorlib">
+    <lang:String x:Key="weight">Ценность</lang:String>
+    <lang:String x:Key="addImage">Добавить картинку</lang:String>
+    <lang:String x:Key="delImage">Удалить картинку</lang:String>
+    <lang:String x:Key="quest">Вопрос</lang:String>
+    <lang:String x:Key="answ">Ответ</lang:String>
+    <lang:String x:Key="right">Истинно</lang:String>
+    <lang:String x:Key="saveChange">Сохранить изменения</lang:String>
+    <lang:String x:Key="clearWork">Очистить</lang:String>
+</ResourceDictionary>

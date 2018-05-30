@@ -6,13 +6,14 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Notest"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
         Height="350" Width="250"  Icon="../ico/main.ico"
         WindowStyle="None" AllowsTransparency="True">
     <Window.Background>
         <ImageBrush ImageSource="..\picture\6.jpg"/>
     </Window.Background>
     <Grid>
-        <Grid Height="25" VerticalAlignment="Top" Background="#535e66">
+        <Grid Height="25" VerticalAlignment="Top" Background="#7a6e6c">
             <Button Width="43" Height="Auto"
                         HorizontalAlignment="Right"
                         Background="{x:Null}"
@@ -58,7 +59,7 @@
                 <Button Name="NewTestButton"
                 Width="90" Height="30"
                 Margin="70,50,0,15"
-                Background="#535e66"
+                Background="#7a6e6c"
                 Foreground="#e3e0de"
                 Content="Ok" 
                 FontSize="10"                

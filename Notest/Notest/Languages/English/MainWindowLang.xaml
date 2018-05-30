@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Notest.Languages.English"
+                    xmlns:lang="clr-namespace:System;assembly=mscorlib">
+    <lang:String x:Key="goodQuest">You already have an account?</lang:String>
+    <lang:String x:Key="prepareIn">Sign into your account</lang:String>
+    <lang:String x:Key="password">Password</lang:String>
+    <lang:String x:Key="signIn">Sign in</lang:String>
+    <lang:String x:Key="importantQuest">Do not have an account?</lang:String>
+    <lang:String x:Key="regist">Register now</lang:String>
+    <lang:String x:Key="useType">User type</lang:String>
+    <lang:String x:Key="user">User</lang:String>
+    <lang:String x:Key="creator">Creator</lang:String>
+    <lang:String x:Key="regg">Register</lang:String>
+</ResourceDictionary>

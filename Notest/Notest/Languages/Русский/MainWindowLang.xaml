@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Notest.Languages.Русский"
+                    xmlns:lang="clr-namespace:System;assembly=mscorlib">
+    <lang:String x:Key="goodQuest">У вас уже есть аккаунт?</lang:String>
+    <lang:String x:Key="prepareIn">Зайдите в него</lang:String>
+    <lang:String x:Key="password">Пароль</lang:String>
+    <lang:String x:Key="signIn">Войти</lang:String>
+    <lang:String x:Key="importantQuest">Нет аккаунта?</lang:String>
+    <lang:String x:Key="regist">Создайте его</lang:String>
+    <lang:String x:Key="useType">Тип аккаунта</lang:String>
+    <lang:String x:Key="user">Пользователь</lang:String>
+    <lang:String x:Key="creator">Создатель</lang:String>
+    <lang:String x:Key="regg">Зарегистрироваться</lang:String>
+</ResourceDictionary>

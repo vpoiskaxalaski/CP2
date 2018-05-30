@@ -3,17 +3,74 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Notest"
         mc:Ignorable="d"
-        Title="Testing" Height="450" Width="400" Loaded="OnStartTest" Background="Gray">
+        Title="Testing" Height="450" Width="400" Loaded="OnStartTest" Background="Gray" WindowStyle="None">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="14*"/>
             <RowDefinition Height="76*"/>
         </Grid.RowDefinitions>
-        <Label FontSize="24" Grid.Row="0" Name="Topic">Тема:</Label>
-        <Label FontSize="24" Grid.Row="1" Name="Header">Название:</Label>
+        <Grid Grid.Row="0" Background="#373940" Margin="0,0,0.4,61.2" Grid.RowSpan="2">
+            <Button Width="45" Height="Auto"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 80 0"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Style="{StaticResource JustButton}"
+                        Click="HideWindow_Click">
+
+                <Image Source="..\ico\minimize.png"
+                                             Width="25" Height="18"
+                                             HorizontalAlignment="Center"
+                                             />
+            </Button>
+            <Button Name="Fullscreen"
+                        Width="45" Height="Auto"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 40 0"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Style="{StaticResource JustButton}"                        
+                        Click="Fullscreen_Click">
+                <materialDesign:PackIcon Kind="Fullscreen"
+                                             Width="25" Height="20"
+                                             HorizontalAlignment="Center"/>
+            </Button>
+            <Button Name="FullscreenExit"
+                        Width="45" Height="Auto"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 40 0"
+                        Visibility="Hidden"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Style="{StaticResource JustButton}"                        
+                        Click="FullscreenExit_Click">
+                <materialDesign:PackIcon Kind="FullscreenExit"
+                                             Width="25" Height="20"
+                                             HorizontalAlignment="Center"/>
+            </Button>
+            <Button Width="43" Height="Auto"
+                        HorizontalAlignment="Right"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}" 
+                        Style="{StaticResource CloseButton}"
+                        Click="CloseWindow_Click">
+                <materialDesign:PackIcon Kind="WindowClose"
+                                             Width="27" Height="21"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             />
+            </Button>
+        </Grid>
+        <Viewbox Grid.Row="1">
+            <WrapPanel Orientation="Vertical" Width="540">
+                <Label FontSize="24" x:Name="Topic" Content="{DynamicResource topic}"/>
+                <Label FontSize="24" x:Name="Header" Content="{DynamicResource header}"/>
+            </WrapPanel>
+        </Viewbox>
         <Viewbox Grid.Row="2">
             <ScrollViewer CanContentScroll="True" Width="400" VerticalScrollBarVisibility="Auto">
                 <StackPanel Name="SelectedTest" Orientation="Vertical" Height="342">

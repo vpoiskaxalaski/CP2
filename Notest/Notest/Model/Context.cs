@@ -43,6 +43,7 @@
         public string UserLogin { get; set; }
         public int TestId { get; set; }
         public int Result { get; set; }
+        public string Date { get; set; }
     }
 
     public partial class Question

@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Notest.Languages.English"
+                    xmlns:lang="clr-namespace:System;assembly=mscorlib">
+    <lang:String x:Key="login">Login</lang:String>
+    <lang:String x:Key="result">Result</lang:String>
+    <lang:String x:Key="date">Date</lang:String>
+    <lang:String x:Key="finish">Finish test</lang:String>
+</ResourceDictionary>

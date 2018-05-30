@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
 using System.Reflection;
-using Word = Microsoft.Office.Interop.Word;
-using Office = Microsoft.Office.Core;
 using System.Drawing;
 using System.Windows.Media.Imaging;
 using System.Drawing.Imaging;
@@ -24,8 +22,8 @@ namespace Notest
             {
                 try
                 {
-                    sfd.Title = "Save to print";
-                    sfd.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+                    sfd.Title = "Save to document";
+                    sfd.InitialDirectory = "E:\\University\\CP\\tests";
                     sfd.Filter = "Text files (*.doc)|*.doc|All files (*.*)|*.*";
                     if (sfd.ShowDialog() == DialogResult.OK)
                     {
@@ -48,13 +46,13 @@ namespace Notest
                                 }
                             }
                         }
+                        System.Diagnostics.Process.Start(sfd.FileName);
 
-                    }
-                    MessageBox.Show("The test is ready to print", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }                   
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Print error: "+ ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("File error: "+ ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

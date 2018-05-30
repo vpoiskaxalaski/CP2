@@ -26,22 +26,22 @@
     <Viewbox Stretch="Fill">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="490"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="63"/>
+                <RowDefinition Height="436"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Background="#373940">
+            <Grid Grid.Row="0" Background="#373940" Height="26">
                 <Button Width="45" Height="Auto"
                         HorizontalAlignment="Right"
                         Margin="0 0 80 0"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
+                        Style="{StaticResource JustButton}"
                         Click="HideWindow_Click">
 
                     <Image Source="..\ico\minimize.png"
-                                             Width="25" Height="25"
+                                             Width="25" Height="18"
                                              HorizontalAlignment="Center"
-                                             Margin="0 -7 0 0"
                                              />
                 </Button>
                 <Button Name="Fullscreen"
@@ -49,7 +49,8 @@
                         HorizontalAlignment="Right"
                         Margin="0 0 40 0"
                         Background="{x:Null}"
-                        BorderBrush="{x:Null}"                        
+                        BorderBrush="{x:Null}"
+                        Style="{StaticResource JustButton}"                        
                         Click="Fullscreen_Click">
                     <materialDesign:PackIcon Kind="Fullscreen"
                                              Width="25" Height="20"
@@ -61,7 +62,8 @@
                         Margin="0 0 40 0"
                         Visibility="Hidden"
                         Background="{x:Null}"
-                        BorderBrush="{x:Null}"                        
+                        BorderBrush="{x:Null}"
+                        Style="{StaticResource JustButton}"                        
                         Click="FullscreenExit_Click">
                     <materialDesign:PackIcon Kind="FullscreenExit"
                                              Width="25" Height="20"
@@ -71,6 +73,7 @@
                         HorizontalAlignment="Right"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}" 
+                        Style="{StaticResource CloseButton}"
                         Click="CloseWindow_Click">
                     <materialDesign:PackIcon Kind="WindowClose"
                                              Width="27" Height="21"
@@ -79,7 +82,7 @@
                                              />
                 </Button>
             </Grid>
-            <Grid  Grid.Row="1" Background="#373940" >
+            <Grid Grid.Row="1" Background="#373940" Height="63">
                 <Image Source="../ico/book.ico"  
                            Width="65" Height="55"
                            HorizontalAlignment="Left"/>
@@ -96,14 +99,14 @@
                                                  Width="Auto" Height="Auto"
                                                  HorizontalAlignment="Center"/>
                 </Button>
-                <Label Height="45" Foreground="Azure" VerticalContentAlignment="Center" Margin="541,8,204,7.8">Мои результаты</Label>
+                <Label Height="45" Foreground="Azure" VerticalContentAlignment="Center" Margin="541,8,204,7.8" Content="{DynamicResource myRes}"/>
                 <Button Width="65" Height="45" Background="#373940" BorderBrush="#373940" Margin="220,8,561.4,7.8" Click="OnChanging" Padding="0,0,0,0">
                     <materialDesign:PackIcon Kind="Rotate3d"
                                                  Foreground="#e3e0de"
                                                  Width="Auto" Height="Auto"
                                                  HorizontalAlignment="Center"/>
                 </Button>
-                <Label Height="45" Margin="285,8,440.4,7.8" Foreground="Azure" VerticalContentAlignment="Center">Поиск/Выбор теста</Label>
+                <Label Height="45" Margin="285,8,440.4,7.8" Foreground="Azure" VerticalContentAlignment="Center" Content="{DynamicResource seaselTest}"/>
                 <Button Width="100" Height="60"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
@@ -119,86 +122,77 @@
                 </Button>
             </Grid>
 
-            <StackPanel Grid.Row="2" Orientation="Vertical" Background="White" Name="First">
-                <Viewbox>
-                    <DataGrid Name="TestGrid" VerticalScrollBarVisibility="Auto" Width="800" Height="490" SelectionChanged="Test_SelectionChanged" ColumnWidth="*"
+            <StackPanel Grid.Row="2" Orientation="Vertical" Background="White" Name="First" Margin="0,1.4,0.4,-0.4" Height="436" Visibility="Collapsed">
+                <DataGrid Name="TestGrid" VerticalScrollBarVisibility="Auto" Width="800" Height="436" SelectionChanged="Test_SelectionChanged" ColumnWidth="*"
                               HorizontalScrollBarVisibility="Auto" IsReadOnly="True">
-                        <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
-                        <DataGridTextColumn Binding="{Binding Topic}" Header="Тема"/>
-                        <DataGridTextColumn Binding="{Binding Header}" Header="Название"/>
-                        <DataGridTextColumn Binding="{Binding Author}" Header="Author"/>
-                    </DataGrid>
-                </Viewbox>
+                    <DataGridTextColumn Binding="{Binding Topic}" Header="{DynamicResource topic}"/>
+                    <DataGridTextColumn Binding="{Binding Header}" Header="{DynamicResource header}"/>
+                    <DataGridTextColumn Binding="{Binding Author}" Header="{DynamicResource author}"/>
+                </DataGrid>
             </StackPanel>
-            <StackPanel Grid.Row="2" Height="350" Orientation="Vertical" Margin="287,10,233,120" Name="Second" Visibility="Collapsed">
-                <Viewbox>
-                    <TabControl Width="326" Height="274" Background="{x:Null}" Name="Tabs">
-                        <TabItem Header="Поиск по теме"
+            <StackPanel Grid.Row="2" Orientation="Vertical" Margin="287,10.4,233.4,75.6" Name="Second">
+                <TabControl Width="326" Height="274" Background="{x:Null}" Name="Tabs">
+                    <TabItem Header="{DynamicResource byTop}"
                                  Background="{x:Null}"
                                  GotFocus="OnSearchTypeSelected"
                                  Height="25" Width="100"                                 
                                  VerticalAlignment="Bottom">
-                            <StackPanel>
-                                <StackPanel Name="SearchByTheme" Height="200">
-                                    <TextBox x:Name="ByTopic"
+                        <StackPanel>
+                            <StackPanel Name="SearchByTheme" Height="200">
+                                <TextBox x:Name="ByTopic"
                                              TextChanged="OnSearchBeginByTheme"
                                              Margin="0,20,0,0"
-                                             materialDesign:HintAssist.Hint="Topic"/>
-                                    <Label Content="Select a topic:"/>
-                                    <ComboBox x:Name="SelectedTopics"
+                                             materialDesign:HintAssist.Hint="{DynamicResource topic}"/>
+                                <Label Content="{DynamicResource selTopic}"/>
+                                <ComboBox x:Name="SelectedTopics"
                                               IsEnabled="False"
                                               SelectionChanged="OnTopicSelected"/>
-                                    <Label Content="Select a header:"/>
-                                    <ComboBox x:Name="SelectedHeaders"
+                                <Label Content="{DynamicResource selHead}"/>
+                                <ComboBox x:Name="SelectedHeaders"
                                               IsEnabled="False"
                                               SelectionChanged="OnHeaderSelected"/>
-                                </StackPanel>
-                                <StackPanel Name="SearchByName"
+                            </StackPanel>
+                            <StackPanel Name="SearchByName"
                                             Height="200"
                                             Visibility="Collapsed">
-                                    <Label Margin="0,10.8,0.4,11.6">Тема</Label>
-                                    <ComboBox x:Name="SelectHeaders" Height="30" IsEnabled="False" SelectionChanged="OnHeaderSelected" Margin="0,41.4,0.4,9.8"/>
-                                </StackPanel>
+                                <Label Margin="0,10.8,0.4,11.6" Content="{DynamicResource topic}"/>
+                                <ComboBox x:Name="SelectHeaders" Height="30" IsEnabled="False" SelectionChanged="OnHeaderSelected" Margin="0,41.4,0.4,9.8"/>
                             </StackPanel>
-                        </TabItem>
-                        <TabItem Header="По названию"
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="{DynamicResource byHead}"
                                  Background="{x:Null}"
                                  Width="100" Height="25"
                                  VerticalContentAlignment="Center"
                                  GotFocus="OnSearchTypeSelected">
-                            <StackPanel Margin="10,0,10,0" VerticalAlignment="Center">
-                                <TextBox  Name="ByHeader" 
-                                          materialDesign:HintAssist.Hint="Header"
+                        <StackPanel Margin="10,0,10,0" VerticalAlignment="Center">
+                            <TextBox  Name="ByHeader" 
+                                          materialDesign:HintAssist.Hint="{DynamicResource header}"
                                           Margin="10,0,10,10"
                                           TextChanged="OnSearchBeginByHeader"/>
-                                <ComboBox x:Name="Headers"
+                            <Label Content="{DynamicResource selHead}"/>
+                            <ComboBox x:Name="Headers"
                                           SelectionChanged="OnHeaderSelected"
                                           Margin="10,0,10,10" IsEnabled="False"/>
-                            </StackPanel>
-                        </TabItem>
-                    </TabControl>
-                </Viewbox>
-                <Viewbox Height="127">
-                    <StackPanel Height="129" Name="Tools" Margin="0,0,-0.4,0" Width="331">
-                        <StackPanel Orientation="Horizontal" Name="Info">
-                            <Label Content="Author" />
-                            <Label x:Name="Author"
-                                   Width="80"/>
-                            <Label Content="Topic"/>
-                            <Label x:Name="Topic"
-                                   Width="80"/>
-                            <Label Content="Header" />
-                            <Label x:Name="Header"
-                                   Width="80"/>
                         </StackPanel>
-                        <Button Content="Select a test"
+                    </TabItem>
+                </TabControl>
+                <StackPanel Height="129" Name="Tools" Margin="0,0,-0.4,0" Width="331">
+                    <StackPanel Orientation="Horizontal" Name="Info">
+                        <Label Content="{DynamicResource author}" />
+                        <Label x:Name="Author"
+                                   Width="80"/>
+                        <Label Content="{DynamicResource topic}"/>
+                        <Label x:Name="Topic"
+                                   Width="80"/>
+                        <Label Content="{DynamicResource header}" />
+                        <Label x:Name="Header"
+                                   Width="80"/>
+                    </StackPanel>
+                    <Button Content="{DynamicResource selTest}"
                                 Margin="42.6,18.4,42.6,26.8"
                                 Click="OnChooseTest"/>
-                        <Label x:Name="Status" 
-                               Width="350" Height="30"
-                               HorizontalContentAlignment="Center" />
-                    </StackPanel>
-                </Viewbox>
+                </StackPanel>
             </StackPanel>
         </Grid>
     </Viewbox>

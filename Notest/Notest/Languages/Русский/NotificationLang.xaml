@@ -1,0 +1,33 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Notest.Languages.Русский"
+                    xmlns:lang="clr-namespace:System;assembly=mscorlib">
+    <lang:String x:Key="noselectTest">Тест не выбран!</lang:String>
+    <lang:String x:Key="hi">Здравствуй</lang:String> 
+    <lang:String x:Key="datafall">Проверьте введённые данные</lang:String>
+    <lang:String x:Key="congratulation">Поздравляем, ваш результат - </lang:String>
+    <lang:String x:Key="max">Максимальный результат - </lang:String>
+    <lang:String x:Key="error">Неизвестная ошибка. Позовите программиста или прочтите документацию</lang:String>
+    <lang:String x:Key="cameBy">Вы зашли под именем</lang:String>
+    <lang:String x:Key="havent">У вас нет результатов!</lang:String>
+    <lang:String x:Key="impo">Это невозможно!</lang:String>
+    <lang:String x:Key="questSelect">Желаете выбрать</lang:String>
+    <lang:String x:Key="sure">Уверены?</lang:String>
+    <lang:String x:Key="noTest">Выбранный тест не существует!</lang:String>
+    <lang:String x:Key="upError">Ошибка обновления</lang:String>
+    <lang:String x:Key="createImpo">Невозможно создать</lang:String>
+    <lang:String x:Key="saveTest">Тест сохранён</lang:String>
+    <lang:String x:Key="saveImpo">Невозможно сохранить</lang:String>
+    <lang:String x:Key="openError">Ошибка открытия</lang:String>
+    <lang:String x:Key="addQuestError">Ошибка добавления вопроса</lang:String>
+    <lang:String x:Key="delQuestError">Ошибка удаления вопроса</lang:String>
+    <lang:String x:Key="saveChanges">Изменения сохранены</lang:String>
+    <lang:String x:Key="saveError">Ошибка сохранения изменений</lang:String>
+    <lang:String x:Key="muteRemove">Не может быть удалено</lang:String>
+    <lang:String x:Key="noOut">Невозможно выйти!</lang:String>
+    <lang:String x:Key="testEx">Тест уже существует!</lang:String>
+    <lang:String x:Key="input">Введите данные!</lang:String>
+    <lang:String x:Key="onlyNumLat">Вы можете использовать только цифры и буквы латинского алфавита</lang:String>
+    <lang:String x:Key="readyToPrint">Тест готов к печати</lang:String>
+    <lang:String x:Key="printError">Ошибка печати</lang:String>
+</ResourceDictionary>

@@ -24,7 +24,7 @@ namespace Notest
         public ChooseTest()
         {
             InitializeComponent();
-            if (File.Exists("choosen.txt"))
+            if (CurrentTest.test != null)
             {
                 string topic = "";
                 string header = "";
@@ -40,7 +40,7 @@ namespace Notest
             }
             else
             {
-                MessageBox.Show("Тест не выбран!");
+                //MessageBox.Show(this.Resources["noselectTest"].ToString());
                 UserWindow user = new UserWindow();
                 user.Show();
                 Close();
@@ -66,10 +66,11 @@ namespace Notest
                     }
                 }
                 Class.CurrentUser.user = user;
-                MessageBox.Show("Вы зашли под логином " + user.Login);
+                MessageBox.Show((string)Application.Current.Resources["cameBy"] + " " + user.Login);
             }
         }
 
+        // завершение теста: подсчёт результатов
         private void OnFinishTest(object sender, RoutedEventArgs e)
         {
             try
@@ -108,6 +109,11 @@ namespace Notest
                                     isRights += counter;
                                 }
                             }
+                            if (element is TextBox)
+                            {
+                                var textBox = element as TextBox;
+                                isRights += textBox.Text;
+                            }
                             if (element is Label)
                             {
                                 Label meta = element as Label;
@@ -116,10 +122,23 @@ namespace Notest
                                 maxResult += weight;
                                 string rightAnswers = weightAndRight[1];
                                 int countRight = 0;
+                                bool isWritten = false; // рукописный ответ
                                 foreach (char right in rightAnswers.ToCharArray())
                                 {
-                                    if (isRights.Contains(right))
-                                        countRight++;
+                                    if (!isWritten)
+                                    {
+                                        if (right == 't') // если не цифра - ответ рукописный
+                                        {
+                                            isWritten = true;
+                                        }
+                                        if (isRights.Contains(right))
+                                            countRight++;
+                                    }
+                                    else
+                                    {
+                                        countRight = CheckWritten(isRights, rightAnswers.Substring(1)); // передаём rightAnswers без t
+                                        break;
+                                    }
                                 }
                                 result += Rate(countRight, rightAnswers.Length, weight);
                             }
@@ -127,14 +146,16 @@ namespace Notest
                         }
                     }
                 }
-                MessageBox.Show("Поздравляем, ваш результат - " + result + "\n Максимальный результат - " + maxResult + "\n");
+                MessageBox.Show((string)Application.Current.Resources["congratulation"] + " - " + result +
+                    "\n" + (string)Application.Current.Resources["max"] + " - " + maxResult + "\n");
                 using (Context db = new Context())
                 {
                     CompletedTest completedTest = new CompletedTest
                     {
                         Result = result,
                         TestId = CurrentTest.test.Id,
-                        UserLogin = Class.CurrentUser.user.Login
+                        UserLogin = Class.CurrentUser.user.Login,
+                        Date = DateTime.Now.ToString()
                     };
                     db.CompletedTest.Add(completedTest);
                     db.SaveChanges();
@@ -143,11 +164,18 @@ namespace Notest
             }
             catch
             {
-                MessageBox.Show("Неожиданная ошибка. Позовите программиста");
+                MessageBox.Show((string)Application.Current.Resources["error"]);
                 Close();
             }
         }
 
+        // проверка письменного ответа
+        private int CheckWritten(string writtenAnswer, string rightsAnswer)
+        {
+            return writtenAnswer.Equals(rightsAnswer) ? writtenAnswer.Length + 1 : 0; // + 1 потому, чтобы учитывать всю длину ответа (нужно для Rate)
+        }
+
+        // подсчёт промежуточного результата
         private int Rate(int current, int total, int weight) // current - набранное количество правильных ответов | total - количество правильных ответов | weight - вес вопроса
         {
             if (total == 0) // если правильных ответов нет вообще
@@ -157,12 +185,14 @@ namespace Notest
             double resultMark = (current / (double)total) * weight; //total
             return (int)Math.Round(resultMark);
         }
-        
+
+        // заполнение теста
         private void FillTest(Context db)
         {
             int counter = 1;
             var questions = from question in db.Questions where question.Test_Id == CurrentTest.test.Id select question;
-            foreach (Question question in questions)
+            var randQuestions = GetShakedQuestions(questions.ToList());
+            foreach (Question question in randQuestions)
             {
                 Expander expander = new Expander
                 {
@@ -186,7 +216,7 @@ namespace Notest
                     {
                         Source = new BitmapImage(new Uri(question.Image)),
                         Width = 100,
-                        Margin = new Thickness(3,0,5,15)
+                        Margin = new Thickness(3, 0, 5, 15)
                     };
                     wrapPanel.Children.Add(image);
                 }
@@ -194,22 +224,39 @@ namespace Notest
                 int number = 1;
                 string rights = "";
                 var answers = from answer in db.Answers where answer.Question_Id == question.Id select answer;
-                foreach (var answer in answers)
+                if (answers.Count() == 1)
                 {
-                    CheckBox variant = new CheckBox
+                    TextBox textBox = new TextBox
                     {
-                        Content = new TextBlock
-                        {
-                            TextWrapping = TextWrapping.Wrap,
-                            Text = answer.Answer1
-                        }
+                        TextWrapping = TextWrapping.Wrap,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Width = this.Width,
+                        TextAlignment = TextAlignment.Center
                     };
-                    answersPanel.Children.Add(variant);
-                    if (answer.IsRight)
+                    rights += "t" + (answers.First().IsRight ? answers.First().Answer1 : ""); // единственный ответ - это скорее ошибка создателя теста
+                    counter++;
+
+                    answersPanel.Children.Add(textBox);
+                }
+                else
+                {
+                    foreach (var answer in answers)
                     {
-                        rights += number;
+                        CheckBox variant = new CheckBox
+                        {
+                            Content = new TextBlock
+                            {
+                                TextWrapping = TextWrapping.Wrap,
+                                Text = answer.Answer1
+                            }
+                        };
+                        answersPanel.Children.Add(variant);
+                        if (answer.IsRight)
+                        {
+                            rights += number;
+                        }
+                        number++;
                     }
-                    number++;
                 }
                 Label weight = new Label
                 {
@@ -224,12 +271,31 @@ namespace Notest
                 SelectedTest.Children.Add(expander);
                 rights = "";
             }
-            Button finishButton = new Button
-            {
-                Content = "Завершить тест"
-            };
+
+            Button finishButton = new Button();
+            finishButton.SetResourceReference(Button.ContentProperty, "finish");
             finishButton.Click += OnFinishTest;
             SelectedTest.Children.Add(finishButton);
+        }
+
+        // получение списка случайно расположенных вопросов
+        private List<Question> GetShakedQuestions(List<Question> questions)
+        {
+            List<Question> shakedQuestions = new List<Question>();
+            List<int> indexList = new List<int>();
+            for (int i = 0; i < questions.Count; i++)
+            {
+                indexList.Add(i);
+            }
+            int randIndex = 0;
+            Random randomize = new Random();
+            for (int i = 0; i < questions.Count; i++)
+            {
+                randIndex = indexList.Count > 1 ? randomize.Next(indexList.Count) : indexList.First();
+                shakedQuestions.Add(questions[randIndex]);
+                indexList.Remove(randIndex);
+            }
+            return shakedQuestions;
         }
 
         // чтобы открывался только один Expander
@@ -239,7 +305,7 @@ namespace Notest
             var stackParent = (StackPanel)thisExpander.Parent; // получаем контейнер с вопросами
             foreach (UIElement child in stackParent.Children) // проходимся по всем элементам
             {
-                if (child is Expander exChild) 
+                if (child is Expander exChild)
                 {
                     if (exChild != thisExpander) // если данный элемент expander, но не текущий, то закрываем его 
                     {
@@ -249,11 +315,38 @@ namespace Notest
             }
         }
 
+        // завершение теста: выход из окна
         private void FinishHim()
         {
             UserWindow userWindow = new UserWindow();
             userWindow.Show();
             Close();
         }
+
+        #region кнопки для окна
+        private void CloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void HideWindow_Click(object sender, RoutedEventArgs e)
+        {
+            SystemCommands.MinimizeWindow(this);
+        }
+
+        private void Fullscreen_Click(object sender, RoutedEventArgs e)
+        {
+            SystemCommands.MaximizeWindow(this);
+            Fullscreen.Visibility = Visibility.Hidden;
+            FullscreenExit.Visibility = Visibility.Visible;
+        }
+
+        private void FullscreenExit_Click(object sender, RoutedEventArgs e)
+        {
+            SystemCommands.RestoreWindow(this);
+            FullscreenExit.Visibility = Visibility.Hidden;
+            Fullscreen.Visibility = Visibility.Visible;
+        }
+        #endregion
     }
 }

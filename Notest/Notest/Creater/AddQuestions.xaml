@@ -16,7 +16,7 @@
             <RowDefinition Height="25"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="#535e66">
+        <Grid Grid.Row="0" Background="#7a6e6c">
             <Button Width="43" Height="Auto"
                         HorizontalAlignment="Right"
                         Background="{x:Null}"
@@ -70,7 +70,7 @@
         </ScrollViewer>
                 <Button Grid.Row="1" Name="FindTestButton"
                 Width="70" Height="25"
-                Background="#535e66"
+                Background="#7a6e6c"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
                 Margin="25"

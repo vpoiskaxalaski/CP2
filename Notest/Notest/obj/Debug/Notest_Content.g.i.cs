@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("picture/6.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("languages/english.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("languages/%d0%a0%d1%83%d1%81%d1%81%d0%ba%d0%b8%d0%b9.png")]
 
 

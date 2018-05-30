@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Notest.Languages.Русский"
+                    xmlns:lang="clr-namespace:System;assembly=mscorlib">
+    <lang:String x:Key="newTest">Новый тест</lang:String>
+    <lang:String x:Key="saveTest">Сохранить тест</lang:String>
+    <lang:String x:Key="openTest">Открыть тест</lang:String>
+    <lang:String x:Key="printTest">Распечатать тест</lang:String>
+    <lang:String x:Key="addQuest">Добавить вопрос</lang:String>
+    <lang:String x:Key="delQuest">Удалить вопрос</lang:String>
+</ResourceDictionary>

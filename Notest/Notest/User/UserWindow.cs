@@ -32,7 +32,7 @@ namespace Notest
         {
             if ((sender as DataGrid).SelectedItem is Test selectedItem) // сопоставление шаблонов
             {
-                var result = MessageBox.Show($"Выбрать тест {selectedItem.Header}", "Ответственный выбор", MessageBoxButton.YesNo);
+                var result = MessageBox.Show($"Do you want to select \"{selectedItem.Header}\"", "Responsible choice", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
                     CurrentTest.test = selectedItem;

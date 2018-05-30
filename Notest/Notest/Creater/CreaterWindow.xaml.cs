@@ -143,68 +143,64 @@ namespace Notest
         {
             try
             {
-                if (CurrentTest.test.Questions.Count != 0)
+                if (Validation.IsTestExist(CurrentTest.test.Topic, CurrentTest.test.Header) == false)
                 {
-                    if (Validation.IsTestExist(CurrentTest.test.Topic, CurrentTest.test.Header) == false)
+                    db.Tests.Add(CurrentTest.test);
+                    db.SaveChanges();
+                    CurrentTest.test.Id = db.Tests.FirstOrDefault(t => (t.Header == CurrentTest.test.Header) && (t.Topic == CurrentTest.test.Topic)).Id;
+
+                    foreach (Question q in CurrentTest.test.Questions)
                     {
-                        db.Tests.Add(CurrentTest.test);
+                        q.Test_Id = CurrentTest.test.Id;
+                        db.Questions.Add(q);
                         db.SaveChanges();
-                        CurrentTest.test.Id = db.Tests.FirstOrDefault(t => (t.Header == CurrentTest.test.Header) && (t.Topic == CurrentTest.test.Topic)).Id;
+                        q.Id = db.Questions.FirstOrDefault(dbQ => (dbQ.Question1 == q.Question1) && (dbQ.Test_Id == q.Test_Id)).Id;
 
-                        foreach (Question q in CurrentTest.test.Questions)
+                        foreach (Answer a in q.Answers)
                         {
-                            q.Test_Id = CurrentTest.test.Id;
-                            db.Questions.Add(q);
+                            a.Question_Id = q.Id;
+                            db.Answers.Add(a);
                             db.SaveChanges();
-                            q.Id = db.Questions.FirstOrDefault(dbQ => (dbQ.Question1 == q.Question1) && (dbQ.Test_Id == q.Test_Id)).Id;
-
-                            foreach (Answer a in q.Answers)
-                            {
-                                a.Question_Id = q.Id;
-                                db.Answers.Add(a);
-                                db.SaveChanges();
-                            }
                         }
                     }
-                    else //если работаем с существующим тестом
-                    {
-                        List<Question> questions = Question.ChangeFromDb(db.Questions.Where(q => q.Test_Id == CurrentTest.test.Id));
-
-                        foreach (Question question in questions)
-                        {
-                            if(question.Answers.Count!=0)
-                            {
-                                db.Answers.RemoveRange(db.Answers.Where(a => a.Question_Id == question.Id));
-                                db.SaveChanges();
-                            }
-                            
-                        }
-
-                        db.Questions.RemoveRange(db.Questions.Where(q => q.Test_Id == CurrentTest.test.Id));
-
-                        foreach (Question q in CurrentTest.test.Questions)
-                        {
-                            q.Test_Id = CurrentTest.test.Id;
-                            db.Questions.Add(q);
-                            db.SaveChanges();
-                            q.Id = db.Questions.FirstOrDefault(dbQ => (dbQ.Question1 == q.Question1) && (dbQ.Test_Id == q.Test_Id)).Id;
-
-                            foreach (Answer a in q.Answers)
-                            {
-                                a.Question_Id = q.Id;
-                                db.Answers.Add(a);
-                                db.SaveChanges();
-                            }
-
-                        }
-                    }
-                    MessageBox.Show("Test saved", "", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                 }
-                else
+                else //если работаем с существующим тестом
                 {
-                    MessageBox.Show("There is nothing to save", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                    List<Question> questions = Question.ChangeFromDb(db.Questions.Where(q => q.Test_Id == CurrentTest.test.Id));
+
+                    foreach (Question question in questions)
+                    {
+                        if (question.Answers.Count != 0)
+                        {
+                            db.Answers.RemoveRange(db.Answers.Where(a => a.Question_Id == question.Id));
+                            db.SaveChanges();
+                        }
+
+                    }
+
+                    if(questions.Count!=0)
+                    {
+                        db.Questions.RemoveRange(db.Questions.Where(q => q.Test_Id == CurrentTest.test.Id));
+                    }                    
+
+                    foreach (Question q in CurrentTest.test.Questions)
+                    {
+                        q.Test_Id = CurrentTest.test.Id;
+                        db.Questions.Add(q);
+                        db.SaveChanges();
+                        q.Id = db.Questions.FirstOrDefault(dbQ => (dbQ.Question1 == q.Question1) && (dbQ.Test_Id == q.Test_Id)).Id;
+
+                        foreach (Answer a in q.Answers)
+                        {
+                            a.Question_Id = q.Id;
+                            db.Answers.Add(a);
+                            db.SaveChanges();
+                        }
+
+                    }
                 }
-        }
+                MessageBox.Show("Test saved", "", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            }  
             catch
             {
                 MessageBox.Show("It is not possible to save", "", MessageBoxButton.OK, MessageBoxImage.Error);

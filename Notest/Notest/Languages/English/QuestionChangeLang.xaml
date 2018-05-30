@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Notest.Languages.English"
+                    xmlns:lang="clr-namespace:System;assembly=mscorlib">
+    <lang:String x:Key="weight">Weight</lang:String>
+    <lang:String x:Key="addImage">Add image</lang:String>
+    <lang:String x:Key="delImage">Delete image</lang:String>
+    <lang:String x:Key="quest">Question</lang:String>
+    <lang:String x:Key="answ">Answer</lang:String>
+    <lang:String x:Key="right">Right</lang:String>
+    <lang:String x:Key="saveChange">Save changes</lang:String>
+    <lang:String x:Key="clearWork">Clear workspace</lang:String>
+</ResourceDictionary>

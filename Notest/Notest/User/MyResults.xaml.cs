@@ -26,20 +26,28 @@ namespace Notest
             {
                 var completed = from compl in db.CompletedTest where compl.UserLogin == Class.CurrentUser.user.Login select compl;
                 List<Class.Completed> completedTests = new List<Class.Completed>();
-                foreach (CompletedTest test in completed)
+                try
                 {
-                    var currentTest = db.Tests.Where(t => t.Id == test.TestId).First();
-                    Class.Completed compl = new Class.Completed
+                    foreach (CompletedTest test in completed)
                     {
-                        Id = 0,
-                        UserLogin = "",
-                        TestName = currentTest.Header,
-                        TestTheme = currentTest.Topic,
-                        Result = test.Result
-                    };
-                    completedTests.Add(compl);
+                        var currentTest = db.Tests.Where(t => t.Id == test.TestId).First();
+                        Class.Completed compl = new Class.Completed
+                        {
+                            UserLogin = "",
+                            TestName = currentTest.Header,
+                            TestTheme = currentTest.Topic,
+                            Result = test.Result,
+                            Date = test.Date
+                        };
+                        completedTests.Add(compl);
+                    }
+                    ResultGrid.ItemsSource = completedTests;
                 }
-                ResultGrid.ItemsSource = completedTests;
+                catch (NullReferenceException)
+                {
+                    ResultGrid.ItemsSource = null;
+                    MessageBox.Show((string)Application.Current.Resources["havent"]);
+                }
             }
         }
     }

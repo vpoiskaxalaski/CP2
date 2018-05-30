@@ -1,0 +1,33 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Notest.Languages.English"
+                    xmlns:lang="clr-namespace:System;assembly=mscorlib">
+    <lang:String x:Key="noselectTest">No test selected!</lang:String>
+    <lang:String x:Key="hi">Welcome</lang:String> 
+    <lang:String x:Key="datafall">Check the entered data</lang:String>
+    <lang:String x:Key="congratulation">Congratulations, your result is</lang:String>
+    <lang:String x:Key="max">Max result is</lang:String>
+    <lang:String x:Key="error">Unexpected error. Call the programmer</lang:String>
+    <lang:String x:Key="cameBy">You came by username</lang:String>
+    <lang:String x:Key="havent">You haven't results!</lang:String>
+    <lang:String x:Key="impo">It is impossible!</lang:String>
+    <lang:String x:Key="questSelect">Do you want to select</lang:String>
+    <lang:String x:Key="sure">Are you sure?</lang:String>
+    <lang:String x:Key="noTest">Selected test isn't exist!</lang:String>
+    <lang:String x:Key="upError">Update error</lang:String>
+    <lang:String x:Key="createImpo">It is not possible to create</lang:String>
+    <lang:String x:Key="saveTest">Test saved</lang:String>
+    <lang:String x:Key="saveImpo">It is not possible to save</lang:String>
+    <lang:String x:Key="openError">Open error</lang:String>
+    <lang:String x:Key="addQuestError">Add question error</lang:String>
+    <lang:String x:Key="delQuestError">Delete question error</lang:String>
+    <lang:String x:Key="saveChanges">Changes saved</lang:String>
+    <lang:String x:Key="saveError">Save changes error</lang:String>
+    <lang:String x:Key="muteRemove">Сan not be removed</lang:String>
+    <lang:String x:Key="noOut">You shall not pass!</lang:String>
+    <lang:String x:Key="testEx">Test is already exist!</lang:String>
+    <lang:String x:Key="input">Enter the data!</lang:String>
+    <lang:String x:Key="onlyNumLat">You can only use numbers and letters of the Latin alphabet</lang:String>
+    <lang:String x:Key="readyToPrint">The test is ready to print</lang:String>
+    <lang:String x:Key="printError">The print error</lang:String>
+</ResourceDictionary>
