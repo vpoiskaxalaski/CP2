@@ -56,6 +56,20 @@ namespace Notest
 
             InitializeComponent();
 
+            foreach (MenuItem item in Languages.Items)
+            {
+                string name = item.Name;
+                item.Height = 25;
+                item.Width = 50;
+                item.ToolTip = name;
+                item.Margin = new Thickness(10, 0, 0, 0);
+                item.Background = new ImageBrush
+                {
+                    ImageSource = BitmapFrame.Create(new Uri(GetLanguageDirectory() + $"\\{name}.png", UriKind.Relative)),
+                    Opacity = 0.7
+                };
+            }
+
             questionChangePanel.IsEnabled = false;
             TestToolsWindow.Children.Add(questionChangePanel);
             questionChangePanel.questionCosttxb.BorderBrush = new SolidColorBrush(Colors.Gray);
@@ -167,20 +181,17 @@ namespace Notest
                 else //если работаем с существующим тестом
                 {
                     List<Question> questions = Question.ChangeFromDb(db.Questions.Where(q => q.Test_Id == CurrentTest.test.Id));
-
+                 
                     foreach (Question question in questions)
                     {
-                        if (question.Answers.Count != 0)
-                        {
                             db.Answers.RemoveRange(db.Answers.Where(a => a.Question_Id == question.Id));
                             db.SaveChanges();
-                        }
-
                     }
 
                     if(questions.Count!=0)
                     {
                         db.Questions.RemoveRange(db.Questions.Where(q => q.Test_Id == CurrentTest.test.Id));
+                        db.SaveChanges();
                     }                    
 
                     foreach (Question q in CurrentTest.test.Questions)
@@ -220,6 +231,7 @@ namespace Notest
                     CleanWindow();
 
                     // добавление вовзможность создать/удалить вопрос
+                    QuestionTools.Visibility = Visibility;
                     QuestionTools.Visibility = Visibility;
                     AddQuestionFromDb.Visibility = Visibility;
                     questionChangePanel.IsEnabled = true;
@@ -343,28 +355,35 @@ namespace Notest
         private void RemoveQuestion_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
-                MessageBoxResult result = MessageBox.Show("Are you shure?", "", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
+            {                
+                string selectedQuestion = question_ListBox.SelectedItem.ToString().Remove(0, question_ListBox.SelectedItem.ToString().IndexOf('.') + 2);
+                int index = question_ListBox.SelectedIndex;
+                if(index!=-1)
                 {
-                    string selectedQuestion = question_ListBox.SelectedItem.ToString().Remove(0, question_ListBox.SelectedItem.ToString().IndexOf('.') + 2);
-                    int index = question_ListBox.SelectedIndex;
-                    question_ListBox.SelectedItem = question_ListBox.Items[0];
-                    question_ListBox.Items.RemoveAt(index);
-
-                    Question question = new Question();
-                    foreach (Question q in CurrentTest.test.Questions)
+                    MessageBoxResult result = MessageBox.Show("Are you shure?", "", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
                     {
-                        if (q.Question1 == selectedQuestion)
-                        {
-                            question = q;
-                            break;
-                        }
-                    }
+                        question_ListBox.SelectedItem = question_ListBox.Items[0];
+                        question_ListBox.Items.RemoveAt(index);
 
-                    CurrentTest.test.Questions.Remove(question);
-                    countQuestion -= 1;
-                    UpdateQuestionList();
+                        Question question = new Question();
+                        foreach (Question q in CurrentTest.test.Questions)
+                        {
+                            if (q.Question1 == selectedQuestion)
+                            {
+                                question = q;
+                                break;
+                            }
+                        }
+
+                        CurrentTest.test.Questions.Remove(question);
+                        countQuestion -= 1;
+                        UpdateQuestionList();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Question is not selected", "", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             catch
@@ -438,6 +457,10 @@ namespace Notest
                             {
                                 q.Image = questionChangePanel.PictureBox.Source.ToString();
                             }
+                            else
+                            {
+                                q.Image = null;
+                            }
                             //варианты ответов
                             answerList = (List<Answer>)questionChangePanel.AnswerDtgrd.ItemsSource;
                             if (answerList != null)
@@ -468,6 +491,7 @@ namespace Notest
             try
             {
                 var selectedAnswer = questionChangePanel.AnswerDtgrd.SelectedItem;
+
                 answerList = (List<Answer>)questionChangePanel.AnswerDtgrd.ItemsSource;
                 if ((selectedAnswer as Answer) != null)
                 {
@@ -546,6 +570,39 @@ namespace Notest
             FullscreenExit.Visibility = Visibility.Hidden;
             Fullscreen.Visibility = Visibility.Visible;
         }
+
+        #region локализация
+        private void OnLanguageChange(object sender, RoutedEventArgs e)
+        {
+            MenuItem selectedLang = sender as MenuItem;
+            string lang = selectedLang.Name;
+            DirectoryInfo directory = new DirectoryInfo(GetLanguageDirectory() + "/" + lang);
+            try
+            {
+                FileInfo[] dictionaries = directory.GetFiles();
+                Application.Current.Resources.Clear();
+                foreach (FileInfo dictionary in dictionaries)
+                {
+                    int index = dictionary.FullName.IndexOf($"Languages\\{lang}");
+                    string resourcePath = dictionary.FullName.Substring(index);
+                    var uri = new Uri(resourcePath, UriKind.Relative);
+                    ResourceDictionary resource = Application.LoadComponent(uri) as ResourceDictionary;
+                    Application.Current.Resources.MergedDictionaries.Add(resource);
+                }
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message);
+            }
+        }
+
+        private string GetLanguageDirectory()
+        {
+            DirectoryInfo directory = new DirectoryInfo(Directory.GetCurrentDirectory());
+            return directory.Parent.Parent.FullName + "\\Languages";
+        }
+        #endregion
+
         #endregion
 
         private void UsersResult_Click(object sender, RoutedEventArgs e)

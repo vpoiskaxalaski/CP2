@@ -14,6 +14,12 @@
     </Window.Background>
     <Grid>
         <Grid Height="25" VerticalAlignment="Top" Background="#7a6e6c">
+            <Menu Name="Languages" 
+                      Background="{x:Null}"                        
+                      HorizontalContentAlignment="Left">
+                <MenuItem Name="Русский" Click="OnLanguageChange" HorizontalContentAlignment="Center"/>
+                <MenuItem Name="English" Click="OnLanguageChange" HorizontalContentAlignment="Center"/>
+            </Menu>
             <Button Width="43" Height="Auto"
                         HorizontalAlignment="Right"
                         Background="{x:Null}"
@@ -28,7 +34,7 @@
         </Grid>
         <Viewbox Stretch="Uniform">
             <StackPanel MinHeight="300" Margin="0 30 0 0">
-                <TextBlock Text="Test topic"  
+                <TextBlock Text="{DynamicResource tTopic}"    
                    FontSize="20"
                    FontWeight="Bold"
                    Foreground="#373940"
@@ -42,7 +48,7 @@
                  Width="200"                 
                  Margin="0,10,0,0"                 
                  TextAlignment="Center"/>
-                <TextBlock Text="Test title"   
+                <TextBlock Text="{DynamicResource tHeader}"   
                    FontSize="20"
                    FontWeight="Bold"
                    Foreground="#373940"
@@ -61,7 +67,7 @@
                 Margin="70,50,0,15"
                 Background="#7a6e6c"
                 Foreground="#e3e0de"
-                Content="Ok" 
+                Content="{DynamicResource okey}" 
                 FontSize="10"                
                 Click="NewTestButton_Click"/>
             </StackPanel>

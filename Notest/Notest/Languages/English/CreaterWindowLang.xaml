@@ -3,9 +3,9 @@
                     xmlns:local="clr-namespace:Notest.Languages.English"
                     xmlns:lang="clr-namespace:System;assembly=mscorlib">
     <lang:String x:Key="newTest">New test</lang:String>
-    <lang:String x:Key="saveTest">Save test</lang:String>
+    <lang:String x:Key="testSave">Save test</lang:String>
     <lang:String x:Key="openTest">Open test</lang:String>
-    <lang:String x:Key="printTest">Print test</lang:String>
+    <lang:String x:Key="openDoc">Open in Word</lang:String>
     <lang:String x:Key="addQuest">Add question</lang:String>
     <lang:String x:Key="delQuest">Delete question</lang:String>
 </ResourceDictionary>

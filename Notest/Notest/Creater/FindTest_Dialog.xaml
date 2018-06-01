@@ -13,7 +13,13 @@
         <ImageBrush ImageSource="..\picture\6.jpg"/>
     </Window.Background>
     <Grid>
-        <Grid Height="25" VerticalAlignment="Top" Background="#7a6e6c">
+        <Grid Height="30" VerticalAlignment="Top" Background="#7a6e6c">
+            <Menu Name="Languages" 
+                      Background="{x:Null}"                        
+                      HorizontalContentAlignment="Left">
+                <MenuItem Name="Русский" Click="OnLanguageChange" HorizontalContentAlignment="Center"/>
+                <MenuItem Name="English" Click="OnLanguageChange" HorizontalContentAlignment="Center"/>
+            </Menu>
             <Button Width="43" Height="Auto"
                         HorizontalAlignment="Right"
                         Background="{x:Null}"
@@ -43,9 +49,9 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Topic}"
-                                    Header="Topic" />
+                                     Header="{DynamicResource topic}" />
                         <GridViewColumn DisplayMemberBinding="{Binding Header}"
-                                    Header="Header" />
+                                    Header="{DynamicResource header}" />
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -57,7 +63,7 @@
                 Margin="25"
                 Background="#7a6e6c"
                 Foreground="#e3e0de"
-                Content="Select" 
+                Content="{DynamicResource select}"
                 FontSize="10"                
                 Click="FindTestButton_Click"/>
     </Grid>

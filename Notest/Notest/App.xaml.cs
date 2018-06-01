@@ -13,5 +13,8 @@ namespace Notest
     /// </summary>
     public partial class App : Application
     {
+        private void OnLanguageChange(object sender, RoutedEventArgs e)
+        {
+        }
     }
 }

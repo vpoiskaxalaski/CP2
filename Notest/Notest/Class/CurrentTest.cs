@@ -16,6 +16,7 @@ namespace Notest
     {
         public static Test  test {get; set;} 
         
+        //переход в Word
         public static void Print()
         {
             using (SaveFileDialog sfd = new SaveFileDialog())
@@ -23,6 +24,7 @@ namespace Notest
                 try
                 {
                     sfd.Title = "Save to document";
+                    Directory.CreateDirectory("E:\\University\\CP\\tests");
                     sfd.InitialDirectory = "E:\\University\\CP\\tests";
                     sfd.Filter = "Text files (*.doc)|*.doc|All files (*.*)|*.*";
                     if (sfd.ShowDialog() == DialogResult.OK)

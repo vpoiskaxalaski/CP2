@@ -17,11 +17,19 @@
     <Viewbox Stretch="Uniform">
         <Grid>
             <Grid Height="25" Width="810" VerticalAlignment="Top">
+                <Menu Name="Languages" 
+                      Background="{x:Null}" 
+                      Margin="500,0,146,0" 
+                      HorizontalContentAlignment="Center">
+                    <MenuItem Name="Русский" Click="OnLanguageChange" HorizontalContentAlignment="Center"/>
+                    <MenuItem Name="English" Click="OnLanguageChange" HorizontalContentAlignment="Center"/>
+                </Menu>
                 <Button Width="45" Height="Auto"
                         HorizontalAlignment="Right"
                         Margin="0 0 40 0"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
+                        Style="{StaticResource JustButton}"
                         Click="HideWindow_Click">
 
                     <Image Source="ico\minimize.png"
@@ -34,6 +42,7 @@
                         HorizontalAlignment="Right"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}" 
+                        Style="{StaticResource CloseButton}"
                         Click="CloseWindow_Click">
                     <materialDesign:PackIcon Kind="WindowClose"
                                              Width="27" Height="21"
@@ -45,30 +54,31 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="350"/>
+                    <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="350"/>
                 </Grid.ColumnDefinitions>
                 <Rectangle Grid.Column="0"
                        Opacity="0.5"
                        Width="250" Height="400"
-                       Margin="0 15 5 45"
+                       Margin="0 35 5 25"
                        Fill="#182d49"/>
                 <Rectangle Grid.Column="2"
                        Opacity="0.5"
                        Width="250" Height="400"
-                       Margin="0 15 5 45"
+                       Margin="0 35 5 25"
                        Fill="#182d49" />
-                <StackPanel Grid.Column="0" Width="250" Margin="50,15,51,45">
+                <StackPanel Grid.Column="0" Width="250" Height="400">
                     <StackPanel  Margin="0 20 0 0"  Orientation="Vertical" >
                         <Image  Source="ico\home.ico"
                         Width="50"
                         Margin="20" />
                         <TextBlock TextAlignment="Center" 
                            FontSize="14"
-                           Text="You already have an account?"
+                           Text="{DynamicResource goodQuest}"
                            Foreground="#f9f9fb"  />
                         <TextBlock TextAlignment="Center"
                            FontSize="14"
-                           Text="Sign in to your account"
+                           Text="{DynamicResource prepareIn}"
                            Foreground="#f9f9fb" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
@@ -78,7 +88,7 @@
                          Foreground="AntiqueWhite"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          MaxLength="15"
-                         materialDesign:HintAssist.Hint="Login"
+                         materialDesign:HintAssist.Hint="{DynamicResource login}"
                          TextAlignment="Center" />
                         <Image Name="Alert_Login"
                        Source="ico\alert.ico"
@@ -93,7 +103,7 @@
                              Foreground="AntiqueWhite"
                              Width="150"
                              Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" 
-                             materialDesign:HintAssist.Hint="Password"                             
+                             materialDesign:HintAssist.Hint="{DynamicResource password}"                             
                              MaxLength="8"/>
                         <Image Name="Alert_Password"
                        Source="ico\alert.ico"
@@ -106,32 +116,33 @@
                      Foreground="#f9f9fb"
                      Width="85"
                      Margin="80 20 0 0"
-                     Content="Login"/>
+                     Content="{DynamicResource signIn}"/>
 
                 </StackPanel>
-                <StackPanel Grid.Column="1" Width="250" Margin="51,15,50,45">
+
+                <StackPanel Grid.Column="2" Width="250" Height="400">
                     <StackPanel  Margin="0 20 0 0"  Orientation="Vertical">
                         <Image  Source="ico\add.ico"
                         Width="50"
                         Margin="10"/>
                         <TextBlock TextAlignment="Center"
                            FontSize="14"
-                           Text="Do not have an account?"
+                           Text="{DynamicResource importantQuest}"
                            Foreground="#f9f9fb"/>
                         <TextBlock TextAlignment="Center"
                            FontSize="14"
-                           Text="Register now"
+                           Text="{DynamicResource regist}"
                            Foreground="#f9f9fb"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"  >
                         <TextBox Name="NewLogin"
-                         ToolTip="You can only use numbers and letters of the Latin alphabet"
+                         ToolTip="{DynamicResource onlyNumLat}"
                          Margin="50 20 0 0"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          Width="150"
                          MaxLength="15"
                          Foreground="AntiqueWhite"
-                         materialDesign:HintAssist.Hint="Login"
+                         materialDesign:HintAssist.Hint="{DynamicResource login}"
                          TextAlignment="Center"/>
                         <Image Name="Alert_NewLogin"
                        Source="ico\alert.ico"
@@ -141,12 +152,12 @@
                     </StackPanel>
                     <StackPanel Margin="50 0 0 0"  Orientation="Horizontal" >
                         <PasswordBox Name="NewPassword"
-                                      ToolTip="You can only use numbers and letters of the Latin alphabet"
+                                      ToolTip="{DynamicResource onlyNumLat}"
                              Width="150"
                              MaxLength="8"
                              Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
                              Foreground="AntiqueWhite"
-                             materialDesign:HintAssist.Hint="Password"/>
+                             materialDesign:HintAssist.Hint="{DynamicResource password}"/>
                         <Image Name="Alert_NewPassword"
                        Source="ico\alert.ico"
                        Margin=" 0,30,0,0"
@@ -154,7 +165,7 @@
                        Visibility="Hidden"/>
                     </StackPanel>
                     <TextBlock FontSize="14"
-                       Text="User Type"
+                       Text="{DynamicResource useType}"
                        Foreground="#f9f9fb"
                        TextAlignment="Center"
                        Margin="0 15 0 0"/>
@@ -165,24 +176,16 @@
                       HorizontalContentAlignment="Center" >
                         <ComboBoxItem IsSelected="True"
                           HorizontalAlignment="Center"
-                          Content="User"/>
+                          Content="{DynamicResource user}"/>
                         <ComboBoxItem HorizontalAlignment="Center"
-                          Content="Creator"/>
+                          Content="{DynamicResource creator}"/>
                     </ComboBox>
                     <Button Name="registrationButton"
-                    Width="85"
-                    Margin="80 40 0 0"
+                    Margin="50,40,29.6,0"
                     Click="OnRegisterButton_Click"
-                    Content="Register"
+                    Content="{DynamicResource regg}"
                     Foreground="#f9f9fb" />
                 </StackPanel>
-                <Menu Name="Languages"
-                      Grid.Column="1"                      
-                      Margin="320,407,-106,0" 
-                      Background="{x:Null}" >
-                    <MenuItem Name="Русский" Click="OnLanguageChange"/>
-                    <MenuItem Name="English" Click="OnLanguageChange"/>
-                </Menu>
             </Grid>
         </Grid>
     </Viewbox>

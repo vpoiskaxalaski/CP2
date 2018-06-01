@@ -3,9 +3,9 @@
                     xmlns:local="clr-namespace:Notest.Languages.Русский"
                     xmlns:lang="clr-namespace:System;assembly=mscorlib">
     <lang:String x:Key="newTest">Новый тест</lang:String>
-    <lang:String x:Key="saveTest">Сохранить тест</lang:String>
-    <lang:String x:Key="openTest">Открыть тест</lang:String>
-    <lang:String x:Key="printTest">Распечатать тест</lang:String>
+    <lang:String x:Key="testSave">Сохранить тест</lang:String>
+    <lang:String x:Key="openTest">Открыть</lang:String>
+    <lang:String x:Key="openDoc">Открыть в Word</lang:String>
     <lang:String x:Key="addQuest">Добавить вопрос</lang:String>
     <lang:String x:Key="delQuest">Удалить вопрос</lang:String>
 </ResourceDictionary>

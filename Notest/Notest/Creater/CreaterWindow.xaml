@@ -25,12 +25,18 @@
     <Viewbox Stretch="Fill">
         <Grid AllowDrop="True">
             <Grid.RowDefinitions>
-                <RowDefinition Height="25"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="490"/>
             </Grid.RowDefinitions>
          
             <Grid Grid.Row="0" Background="#373940">
+                <Menu Name="Languages" 
+                      Background="{x:Null}"                        
+                      HorizontalContentAlignment="Center">
+                    <MenuItem Name="Русский" Click="OnLanguageChange" HorizontalContentAlignment="Center"/>
+                    <MenuItem Name="English" Click="OnLanguageChange" HorizontalContentAlignment="Center"/>
+                </Menu>
                 <Button Width="45" Height="Auto"
                         HorizontalAlignment="Right"
                         Margin="0 0 80 0"
@@ -91,7 +97,8 @@
                 <TextBlock x:Name="UserLogin"
                            Margin="15,20,0,10"
                            Foreground="#e3e0de"
-                           Width="140"
+                           Width="100"
+                           TextWrapping="Wrap"
                            FontSize="20"/>
                 <Button Name="UsersResult"
                         ToolTip="Show passed tests"
@@ -107,14 +114,14 @@
 
                 <StackPanel Orientation="Horizontal" Margin="0,5,25,5" >
                     <Button Name="NewTest"
-                            Width="90" Height="55"
+                            Width="108" Height="55"
                             Background="{x:Null}"
                             BorderBrush="{x:Null}"
                             HorizontalAlignment="Left" 
                             VerticalAlignment="Bottom"
                             Click="NewTest_Click" >
                         <StackPanel>
-                            <TextBlock Text="New Test"
+                            <TextBlock Text="{DynamicResource newTest}"
                                Foreground="#e3e0de" />
                             <materialDesign:PackIcon Kind="ContentPaste"
                                                      Foreground="#e3e0de"
@@ -123,14 +130,14 @@
                         </StackPanel>
                     </Button>
                     <Button Name="SaveTest"
-                            Width="90" Height="60"
+                            Width="105" Height="60"
                             Margin="0 -7 0 0"
                             IsEnabled="False"
                             Background="{x:Null}"
                             BorderBrush="{x:Null}"  
                             Click="SaveTest_Click" >
                         <StackPanel>
-                            <TextBlock Text="Save Test"
+                            <TextBlock Text="{DynamicResource testSave}"
                                Foreground="#e3e0de"/>
                             <materialDesign:PackIcon Kind="ContentSaveOutline"
                                                  Foreground="#e3e0de"
@@ -146,7 +153,7 @@
                             Click="OpenTest_Click"
                             Margin="0,-7,0,0">
                         <StackPanel>
-                            <TextBlock Text="Open Test"
+                            <TextBlock Text="{DynamicResource openTest}"
                                        Foreground="#e3e0de"/>
                             <materialDesign:PackIcon Kind="FolderOutline"
                                                      Foreground="#e3e0de"
@@ -155,14 +162,14 @@
                         </StackPanel>
                     </Button>
                     <Button Name="PrintTest"
-                            Width="125" Height="60"
+                            Width="138" Height="60"
                             Background="{x:Null}"
                             BorderBrush="{x:Null}" 
                             IsEnabled="false"
                             Click="PrintTest_Click"
                             Margin="0,-8,0,0">
                         <StackPanel>
-                            <TextBlock Text="Open in Word"
+                            <TextBlock Text="{DynamicResource openDoc}"
                                        Foreground="#e3e0de"/>
                             <materialDesign:PackIcon Kind="FileWord"
                                                      Foreground="#e3e0de"
@@ -171,17 +178,17 @@
                         </StackPanel>
                     </Button>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Name="QuestionTools"  Margin="5,5,25,5" Visibility="Visible">
+                <StackPanel Orientation="Horizontal" Name="QuestionTools"  Margin="5,5,25,5" Visibility="Hidden">
                     
                     <Button Name="AddQuestion"
-                            Width="120" Height="60"
+                            Width="150" Height="60"
                             Background="{x:Null}"
                             BorderBrush="{x:Null}"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Bottom"
                             Click="AddQuestion_Click">
                         <StackPanel>
-                            <TextBlock Text="Add Question"
+                            <TextBlock Text="{DynamicResource addQuest}"
                                         Foreground="#e3e0de"
                                         Margin="0 5 0 0"/>
                             <materialDesign:PackIcon Kind="PlusOne"
@@ -198,7 +205,7 @@
                             VerticalAlignment="Bottom"
                             Click="RemoveQuestion_Click">
                         <StackPanel>
-                            <TextBlock Text="Delete Question"
+                            <TextBlock Text="{DynamicResource delQuest}"
                                VerticalAlignment="Top"
                                Foreground="#e3e0de"
                                Margin="20,5,0,0" />
